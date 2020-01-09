@@ -494,6 +494,8 @@ type
     of object;
   callout_function_callback = function (block : ppcre2_callout_block) : Integer
     of object;
+  pcre2_callout_enumerate_callback = function (block :
+    ppcre2_callout_enumerate_block; data : Pointer) : Integer of object;
 
 {$IFDEF WINDOWS}
   const PCRE2Lib = 'libpcre2.dll';
@@ -572,6 +574,49 @@ function pcre2_set_glob_escape (cvcontext : ppcre2_convert_context;
   escape_char : Cardinal) : Integer; cdecl; external PCRE2Lib;
 function pcre2_set_glob_separator (cvcontext : ppcre2_convert_context;
   separator_char : Cardinal) : Integer; cdecl; external PCRE2Lib;
+
+{ Functions concerned with compiling a pattern to PCRE internal code. }
+function pcre2_compile (pattern : PCRE2_SPTR; length : PCRE2_SIZE; options :
+  Cardinal; errorcode : PInteger; erroroffset : PPCRE2_SIZE; ccontext :
+  ppcre2_compile_context) : ppcre2_code; cdecl; external PCRE2Lib;
+procedure pcre2_code_free (code : ppcre2_code); cdecl; external PCRE2Lib;
+function pcre2_code_copy (const code : ppcre2_code) : ppcre2_code; cdecl;
+  external PCRE2Lib;
+function pcre2_code_copy_with_tables (const code : ppcre2_code) : ppcre2_code;
+  cdecl; external PCRE2Lib;
+
+{ Functions that give information about a compiled pattern. }
+function pcre2_pattern_info (const code : ppcre2_code; what : Cardinal; where :
+  Pointer) : Integer; cdecl; external PCRE2Lib;
+function pcre2_callout_enumerate (const code : ppcre2_code; callback :
+  pcre2_callout_enumerate_callback; callout_data : Pointer) : Integer; cdecl;
+  external PCRE2Lib;
+
+{ Functions for running a match and inspecting the result. }
+function pcre2_match_data_create (ovecsize : Cardinal; gcontext :
+  ppcre2_general_context) : ppcre2_match_data; cdecl; external PCRE2Lib;
+function pcre2_match_data_create_from_pattern (const code : ppcre2_code;
+  gcontext : ppcre2_general_context) : ppcre2_match_data; cdecl;
+  external PCRE2Lib;
+function pcre2_dfa_match (const code : ppcre2_code; subject : PCRE2_SPTR;
+  length : PCRE2_SIZE; startoffset : PCRE2_SIZE; options : Cardinal;
+  match_data : ppcre2_match_data; mcontext : ppcre2_match_context; workspace :
+  PInteger; wscount : PCRE2_SIZE) : Integer; cdecl; external PCRE2Lib;
+function pcre2_match (const code : ppcre2_code; subject : PCRE2_SPTR; length :
+  PCRE2_SIZE; startoffset : PCRE2_SIZE; options : Cardinal; match_data :
+  ppcre2_match_data; mcontext : ppcre2_match_context) : Integer; cdecl;
+  external PCRE2Lib;
+procedure pcre2_match_data_free (match_data : ppcre2_match_data); cdecl;
+  external PCRE2Lib;
+function pcre2_get_mark (match_data : ppcre2_match_data) : PCRE2_SPTR; cdecl;
+  external PCRE2Lib;
+function pcre2_get_ovector_count (match_data : ppcre2_match_data) : Cardinal;
+  cdecl; external PCRE2Lib;
+function pcre2_get_ovector_pointer (match_data : ppcre2_match_data) :
+  PPCRE2_SIZE; cdecl; external PCRE2Lib;
+function pcre2_get_startchar (match_data : ppcre2_match_data) : PCRE2_SIZE;
+  cdecl; external PCRE2Lib;
+
 
 
 implementation
