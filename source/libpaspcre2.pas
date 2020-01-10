@@ -617,6 +617,49 @@ function pcre2_get_ovector_pointer (match_data : ppcre2_match_data) :
 function pcre2_get_startchar (match_data : ppcre2_match_data) : PCRE2_SIZE;
   cdecl; external PCRE2Lib;
 
+{ Convenience functions for handling matched substrings. }
+function pcre2_substring_copy_byname (match_data : ppcre2_match_data; name :
+  PCRE2_SPTR; buffer : PPCRE2_UCHAR; bufflen : PPCRE2_SIZE) : Integer; cdecl;
+  external PCRE2Lib;
+function pcre2_substring_copy_bynumber (match_data : ppcre2_match_data; number :
+  Cardinal; buffer : PPCRE2_UCHAR; bufflen : PPCRE2_SIZE) : Integer; cdecl;
+  external PCRE2Lib;
+procedure pcre2_substring_free (buffer : PPCRE2_UCHAR); cdecl;
+  external PCRE2Lib;
+function pcre2_substring_get_byname (match_data : ppcre2_match_data; name :
+  PCRE2_SPTR; bufferptr : PPPCRE2_UCHAR; bufflen : PPCRE2_SIZE) : Integer;
+  cdecl; external PCRE2Lib;
+function pcre2_substring_get_bynumber (match_data : ppcre2_match_data; number :
+  Cardinal; bufferptr : PPPCRE2_UCHAR; bufflen : PPCRE2_SIZE) : Integer; cdecl;
+  external PCRE2Lib;
+function pcre2_substring_length_byname (match_data : ppcre2_match_data; name :
+  PCRE2_SPTR; length : PPCRE2_SIZE) : Integer; cdecl; external PCRE2Lib;
+function pcre2_substring_length_bynumber (match_data : ppcre2_match_data;
+  number : Cardinal; length : PPCRE2_SIZE) : Integer; cdecl; external PCRE2Lib;
+function pcre2_substring_nametable_scan (const code : ppcre2_code; name :
+  PCRE2_SPTR; first : PPCRE2_SPTR; last : PPCRE2_SPTR) : Integer; cdecl;
+  external PCRE2Lib;
+function pcre2_substring_number_from_name (const code : ppcre2_code; name :
+  PCRE2_SPTR) : Integer; cdecl; external PCRE2Lib;
+procedure pcre2_substring_list_free (list : PPCRE2_SPTR); cdecl;
+  external PCRE2Lib;
+function pcre2_substring_list_get (match_data : ppcre2_match_data; listptr :
+  PPPPCRE2_UCHAR; lengthsptr : PPPCRE2_SIZE) : Integer; cdecl;
+  external PCRE2Lib;
+
+{ Functions for serializing / deserializing compiled patterns. }
+function pcre2_serialize_encode (const codes : pppcre2_code; number_of_codes :
+  Longint; serialized_bytes : PPByte; serialized_size : PPCRE2_SIZE; gcontext :
+  ppcre2_general_context) : Longint; cdecl; external PCRE2Lib;
+function pcre2_serialize_decode (codes : pppcre2_code; number_of_codes :
+  Longint; const bytes : PByte; gcontext : ppcre2_general_context) : Longint;
+  cdecl; external PCRE2Lib;
+function pcre2_serialize_get_number_of_codes (const bytes : PByte) : Longint;
+  cdecl; external PCRE2Lib;
+procedure pcre2_serialize_free (bytes : PByte); cdecl; external PCRE2Lib;
+
+
+
 
 
 implementation
