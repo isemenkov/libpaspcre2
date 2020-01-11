@@ -658,7 +658,43 @@ function pcre2_serialize_get_number_of_codes (const bytes : PByte) : Longint;
   cdecl; external PCRE2Lib;
 procedure pcre2_serialize_free (bytes : PByte); cdecl; external PCRE2Lib;
 
+{ Convenience function for match + substitute. }
+function pcre2_substitute (const code : ppcre2_code; subject : PCRE2_SPTR;
+  length : PCRE2_SIZE; startoffset : PCRE2_SIZE; options : Cardinal;
+  match_data : ppcre2_match_data; mcontext : ppcre2_match_context; replacement :
+  PCRE2_SPTR; rlength : PCRE2_SIZE; outputbuffer : PPCRE2_UCHAR; outlengthptr :
+  PPCRE2_SIZE) : Integer; cdecl; external PCRE2Lib;
 
+{ Functions for converting pattern source strings. }
+function pcre2_pattern_convert (pattern : PCRE2_SPTR; length : PCRE2_SIZE;
+  options : Cardinal; buffer : PPPCRE2_UCHAR; blength : PPCRE2_SIZE; cvcontext :
+  ppcre2_convert_context) : Integer; cdecl; external PCRE2Lib;
+procedure pcre2_converted_pattern_free (converted_pattern : PPCRE2_UCHAR);
+  cdecl; external PCRE2Lib;
+
+{ Functions for JIT processing }
+function pcre2_jit_compile (code : ppcre2_code; options : Cardinal) : Integer;
+  cdecl; external PCRE2Lib;
+function pcre2_jit_match (const code : ppcre2_code; subject : PCRE2_SPTR;
+  length : PCRE2_SIZE; startoffset : PCRE2_SIZE; options : Cardinal;
+  match_data : ppcre2_match_data; mcontext : ppcre2_match_context) : Integer;
+  cdecl; external PCRE2Lib;
+procedure pcre2_jit_free_unused_memory (gcontext : ppcre2_general_context);
+  cdecl; external PCRE2Lib;
+function pcre2_jit_stack_create (startsize : PCRE2_SIZE; maxsize : PCRE2_SIZE;
+  gcontext : ppcre2_general_context) : ppcre2_jit_stack; cdecl;
+  external PCRE2Lib;
+procedure pcre2_jit_stack_assign (mcontext : ppcre2_match_context;
+  callback_function : pcre2_jit_callback; callback_data : Pointer); cdecl;
+  external PCRE2Lib;
+procedure pcre2_jit_stack_free (jit_stack : ppcre2_jit_stack); cdecl;
+  external PCRE2Lib;
+
+{ Other miscellaneous functions. }
+function pcre2_get_error_message (errorcode : Integer; buffer : PPCRE2_UCHAR;
+  bufflen : PCRE2_SIZE) : Integer; cdecl; external PCRE2Lib;
+function pcre2_maketables (gcontext : ppcre2_general_context) : PByte; cdecl;
+  external PCRE2Lib;
 
 
 
