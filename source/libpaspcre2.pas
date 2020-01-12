@@ -388,76 +388,180 @@ type
     including pattern offsets for errors and subject offsets after a match. We
     define special values to indicate zero-terminated strings and unset offsets
     in the offset vector (ovector). }
+  PPPCRE2_SIZE = ^PPCRE2_SIZE;
   PPCRE2_SIZE = ^PCRE2_SIZE;
   PCRE2_SIZE = type QWord;
 
   { Generic types for opaque structures and JIT callback functions. }
-  ppcre2_real_general_context = ^pcre2_real_general_context;
-  pcre2_real_general_context = record
+  ppcre2_real_general_context_8 = ^pcre2_real_general_context_8;
+  pcre2_real_general_context_8 = record
   end;
 
-  ppcre2_general_context = ^pcre2_general_context;
-  pcre2_general_context = pcre2_real_general_context;
-
-  ppcre2_real_compile_context = ^pcre2_real_compile_context;
-  pcre2_real_compile_context = record
+  ppcre2_real_general_context_16 = ^pcre2_real_general_context_16;
+  pcre2_real_general_context_16 = record
   end;
 
-  ppcre2_compile_context = ^pcre2_compile_context;
-  pcre2_compile_context = pcre2_real_compile_context;
-
-  ppcre2_real_match_context = ^pcre2_real_match_context;
-  pcre2_real_match_context = record
+  ppcre2_real_general_context_32 = ^pcre2_real_general_context_32;
+  pcre2_real_general_context_32 = record
   end;
 
-  ppcre2_match_context = ^pcre2_match_context;
-  pcre2_match_context = pcre2_real_match_context;
+  ppcre2_general_context_8 = ^pcre2_general_context_8;
+  pcre2_general_context_8 = pcre2_real_general_context_8;
 
-  ppcre2_real_convert_context = ^pcre2_real_convert_context;
-  pcre2_real_convert_context = record
+  ppcre2_general_context_16 = ^pcre2_general_context_16;
+  pcre2_general_context_16 = pcre2_real_general_context_16;
+
+  ppcre2_general_context_32 = ^pcre2_general_context_32;
+  pcre2_general_context_32 = pcre2_real_general_context_32;
+
+  ppcre2_real_compile_context_8 = ^pcre2_real_compile_context_8;
+  pcre2_real_compile_context_8 = record
   end;
 
-  ppcre2_convert_context = ^pcre2_convert_context;
-  pcre2_convert_context = pcre2_real_convert_context;
-
-  ppcre2_real_code = ^pcre2_real_code;
-  pcre2_real_code = record
+  ppcre2_real_compile_context_16 = ^pcre2_real_compile_context_16;
+  pcre2_real_compile_context_16 = record
   end;
 
-  ppcre2_code = ^pcre2_code;
-  pcre2_code = pcre2_real_code;
-
-  ppcre2_real_match_data = ^pcre2_real_match_data;
-  pcre2_real_match_data = record
+  ppcre2_real_compile_context_32 = ^pcre2_real_compile_contex32;
+  pcre2_real_compile_context_32 = record
   end;
 
-  ppcre2_match_data = ^pcre2_match_data;
-  pcre2_match_data = pcre2_real_match_data;
+  ppcre2_compile_context_8 = ^pcre2_compile_context_8;
+  pcre2_compile_context_8 = pcre2_real_compile_context_8;
 
-  ppcre2_real_jit_stack = ^pcre2_real_jit_stack;
-  pcre2_real_jit_stack = record
+  ppcre2_compile_context_16 = ^pcre2_compile_context_16;
+  pcre2_compile_context_16 = pcre2_real_compile_context_16;
+
+  ppcre2_compile_context_32 = ^pcre2_compile_context_32;
+  pcre2_compile_context_32 = pcre2_real_compile_context_32;
+
+  ppcre2_real_match_context_8 = ^pcre2_real_match_context_8;
+  pcre2_real_match_context_8 = record
   end;
 
-  ppcre2_jit_stack = ^pcre2_jit_stack;
-  pcre2_jit_stack = pcre2_real_jit_stack;
+  ppcre2_real_match_context_16 = ^pcre2_real_match_context_16;
+  pcre2_real_match_context_16 = record
+  end;
 
-  pcre2_jit_callback = function (ptr : Pointer) : ppcre2_jit_stack of object;
+  ppcre2_real_match_context_32 = ^pcre2_real_match_context_32;
+  pcre2_real_match_context_32 = record
+  end;
+
+  ppcre2_match_context_8 = ^pcre2_match_context_8;
+  pcre2_match_context_8 = pcre2_real_match_context_8;
+
+  ppcre2_match_context_16 = ^pcre2_match_context_16;
+  pcre2_match_context_16 = pcre2_real_match_context_16;
+
+  ppcre2_match_context_32 = ^pcre2_match_context_32;
+  pcre2_match_context_32 = pcre2_real_match_context_32;
+
+  ppcre2_real_convert_context_8 = ^pcre2_real_convert_context_8;
+  pcre2_real_convert_context_8 = record
+  end;
+
+  ppcre2_real_convert_context_16 = ^pcre2_real_convert_context_16;
+  pcre2_real_convert_context_16 = record
+  end;
+
+  ppcre2_real_convert_context_32 = ^pcre2_real_convert_context_32;
+  pcre2_real_convert_context_32 = record
+  end;
+
+  ppcre2_convert_context_8 = ^pcre2_convert_context_8;
+  pcre2_convert_context_8 = pcre2_real_convert_context_8;
+
+  ppcre2_convert_context_16 = ^pcre2_convert_context_16;
+  pcre2_convert_context_16 = pcre2_real_convert_context_16;
+
+  ppcre2_convert_context_32 = ^pcre2_convert_context_32;
+  pcre2_convert_context_32 = pcre2_real_convert_context_32;
+
+  ppcre2_real_code_8 = ^pcre2_real_code_8;
+  pcre2_real_code_8 = record
+  end;
+
+  ppcre2_real_code_16 = ^pcre2_real_code_16;
+  pcre2_real_code_16 = record
+  end;
+
+  ppcre2_real_code_32 = ^pcre2_real_code_32;
+  pcre2_real_code_32 = record
+  end;
+
+  ppcre2_code_8 = ^pcre2_code_8;
+  pcre2_code_8 = pcre2_real_code_8;
+
+  ppcre2_code_16 = ^pcre2_code_16;
+  pcre2_code_16 = pcre2_real_code_16;
+
+  ppcre2_code_32 = ^pcre2_code_32;
+  pcre2_code_32 = pcre2_real_code_32;
+
+  ppcre2_real_match_data_8 = ^pcre2_real_match_data_8;
+  pcre2_real_match_data_8 = record
+  end;
+
+  ppcre2_real_match_data_16 = ^pcre2_real_match_data_16;
+  pcre2_real_match_data_16 = record
+  end;
+
+  ppcre2_real_match_data_32 = ^pcre2_real_match_data_32;
+  pcre2_real_match_data_32 = record
+  end;
+
+  ppcre2_match_data_8 = ^pcre2_match_data_8;
+  pcre2_match_data_8 = pcre2_real_match_data_8;
+
+  ppcre2_match_data_16 = ^pcre2_match_data_16;
+  pcre2_match_data_16 = pcre2_real_match_data_16;
+
+  ppcre2_match_data_32 = ^pcre2_match_data_32;
+  pcre2_match_data_32 = pcre2_real_match_data_32;
+
+  ppcre2_real_jit_stack_8 = ^pcre2_real_jit_stack_8;
+  pcre2_real_jit_stack_8 = record
+  end;
+
+  ppcre2_real_jit_stack_16 = ^pcre2_real_jit_stack_16;
+  pcre2_real_jit_stack_16 = record
+  end;
+
+  ppcre2_real_jit_stack_32 = ^pcre2_real_jit_stack_32;
+  pcre2_real_jit_stack_32 = record
+  end;
+
+  ppcre2_jit_stack_8 = ^pcre2_jit_stack_8;
+  pcre2_jit_stack_8 = pcre2_real_jit_stack_8;
+
+  ppcre2_jit_stack_16 = ^pcre2_jit_stack_16;
+  pcre2_jit_stack_16 = pcre2_real_jit_stack_16;
+
+  ppcre2_jit_stack_32 = ^pcre2_jit_stack_32;
+  pcre2_jit_stack_32 = pcre2_real_jit_stack_32;
+
+  pcre2_jit_callback_8 = function (ptr : Pointer) : ppcre2_jit_stack_8
+    of object;
+  pcre2_jit_callback_16 = function (ptr : Pointer) : ppcre2_jit_stack_16
+    of object;
+  pcre2_jit_callback_32 = function (ptr : Pointer) : ppcre2_jit_stack_32
+    of object;
 
   { The structure for passing out data via the pcre_callout_function. We use a
     structure so that new fields can be added on the end in future versions,
     without changing the API of the function, thereby allowing old clients to
     work without modification. Define the generic version in a macro; the
     width-specific versions are generated from this macro below. }
-  ppcre2_callout_block = ^pcre2_callout_block;
-  pcre2_callout_block = record
+  ppcre2_callout_block_8 = ^pcre2_callout_block_8;
+  pcre2_callout_block_8 = record
     version : Cardinal;                 { Identifies version of block }
     { ------------------------ Version 0 ------------------------------- }
     callout_number : Cardinal;          { Number compiled into pattern }
     capture_top : Cardinal;             { Max current capture }
     capture_last : Cardinal;            { Most recently closed capture }
     offset_vector : PPCRE2_SIZE;        { The offset vector }
-{?} mark : PCRE2_SPTR;                  { Pointer to current mark or NULL }
-{?} subject : PCRE2_SPTR;               { The subject being matched }
+    mark : PCRE2_SPTR8;                 { Pointer to current mark or NULL }
+    subject : PCRE2_SPTR8;              { The subject being matched }
     subject_length : PCRE2_SIZE;        { The length of the subject }
     start_match : PCRE2_SIZE;           { Offset to start of this match attempt}
     current_position : PCRE2_SIZE;      { Where we currently are in the subject}
@@ -467,14 +571,64 @@ type
     callout_string_offset : PCRE2_SIZE; { Offset to string within pattern }
     callout_string_length : PCRE2_SIZE; { Length of string compiled into
                                           pattern }
-{?} callout_string : PCRE2_SPTR;        { String compiled into pattern }
+    callout_string : PCRE2_SPTR8;       { String compiled into pattern }
     { ------------------- Added for Version 2 -------------------------- }
     callout_flags : Cardinal;           { See above for list }
     { ------------------------------------------------------------------ }
   end;
 
-  ppcre2_callout_enumerate_block = ^pcre2_callout_enumerate_block;
-  pcre2_callout_enumerate_block = record
+  ppcre2_callout_block_16 = ^pcre2_callout_block_16;
+  pcre2_callout_block_16 = record
+    version : Cardinal;                 { Identifies version of block }
+    { ------------------------ Version 0 ------------------------------- }
+    callout_number : Cardinal;          { Number compiled into pattern }
+    capture_top : Cardinal;             { Max current capture }
+    capture_last : Cardinal;            { Most recently closed capture }
+    offset_vector : PPCRE2_SIZE;        { The offset vector }
+    mark : PCRE2_SPTR16;                { Pointer to current mark or NULL }
+    subject : PCRE2_SPTR16;             { The subject being matched }
+    subject_length : PCRE2_SIZE;        { The length of the subject }
+    start_match : PCRE2_SIZE;           { Offset to start of this match attempt}
+    current_position : PCRE2_SIZE;      { Where we currently are in the subject}
+    pattern_position : PCRE2_SIZE;      { Offset to next item in the pattern }
+    next_item_length : PCRE2_SIZE;      { Length of next item in the pattern }
+    { ------------------- Added for Version 1 -------------------------- }
+    callout_string_offset : PCRE2_SIZE; { Offset to string within pattern }
+    callout_string_length : PCRE2_SIZE; { Length of string compiled into
+                                          pattern }
+    callout_string : PCRE2_SPTR16;      { String compiled into pattern }
+    { ------------------- Added for Version 2 -------------------------- }
+    callout_flags : Cardinal;           { See above for list }
+    { ------------------------------------------------------------------ }
+  end;
+
+  ppcre2_callout_block_32 = ^pcre2_callout_block_32;
+  pcre2_callout_block_32 = record
+    version : Cardinal;                 { Identifies version of block }
+    { ------------------------ Version 0 ------------------------------- }
+    callout_number : Cardinal;          { Number compiled into pattern }
+    capture_top : Cardinal;             { Max current capture }
+    capture_last : Cardinal;            { Most recently closed capture }
+    offset_vector : PPCRE2_SIZE;        { The offset vector }
+    mark : PCRE2_SPTR32;                { Pointer to current mark or NULL }
+    subject : PCRE2_SPTR32;             { The subject being matched }
+    subject_length : PCRE2_SIZE;        { The length of the subject }
+    start_match : PCRE2_SIZE;           { Offset to start of this match attempt}
+    current_position : PCRE2_SIZE;      { Where we currently are in the subject}
+    pattern_position : PCRE2_SIZE;      { Offset to next item in the pattern }
+    next_item_length : PCRE2_SIZE;      { Length of next item in the pattern }
+    { ------------------- Added for Version 1 -------------------------- }
+    callout_string_offset : PCRE2_SIZE; { Offset to string within pattern }
+    callout_string_length : PCRE2_SIZE; { Length of string compiled into
+                                          pattern }
+    callout_string : PCRE2_SPTR32;      { String compiled into pattern }
+    { ------------------- Added for Version 2 -------------------------- }
+    callout_flags : Cardinal;           { See above for list }
+    { ------------------------------------------------------------------ }
+  end;
+
+  ppcre2_callout_enumerate_block_8 = ^pcre2_callout_enumerate_block_8;
+  pcre2_callout_enumerate_block_8 = record
     version : Cardinal;                 { Identifies version of block }
     { ------------------------ Version 0 ------------------------------- }
     pattern_position : PCRE2_SIZE;      { Offset to next item in the pattern }
@@ -483,7 +637,35 @@ type
     callout_string_offset : PCRE2_SIZE; { Offset to string within pattern }
     callout_string_length : PCRE2_SIZE; { Length of string compiled into
                                           pattern }
-    callout_string : PCRE2_SPTR;        { String compiled into pattern }
+    callout_string : PCRE2_SPTR8;       { String compiled into pattern }
+    { ------------------------------------------------------------------ }
+  end;
+
+  ppcre2_callout_enumerate_block_16 = ^pcre2_callout_enumerate_block_16;
+  pcre2_callout_enumerate_block_16 = record
+    version : Cardinal;                 { Identifies version of block }
+    { ------------------------ Version 0 ------------------------------- }
+    pattern_position : PCRE2_SIZE;      { Offset to next item in the pattern }
+    next_item_length : PCRE2_SIZE;      { Length of next item in the pattern }
+    callout_number : Cardinal;          { Number compiled into pattern }
+    callout_string_offset : PCRE2_SIZE; { Offset to string within pattern }
+    callout_string_length : PCRE2_SIZE; { Length of string compiled into
+                                          pattern }
+    callout_string : PCRE2_SPTR16;      { String compiled into pattern }
+    { ------------------------------------------------------------------ }
+  end;
+
+  ppcre2_callout_enumerate_block_32 = ^pcre2_callout_enumerate_block_32;
+  pcre2_callout_enumerate_block_32 = record
+    version : Cardinal;                 { Identifies version of block }
+    { ------------------------ Version 0 ------------------------------- }
+    pattern_position : PCRE2_SIZE;      { Offset to next item in the pattern }
+    next_item_length : PCRE2_SIZE;      { Length of next item in the pattern }
+    callout_number : Cardinal;          { Number compiled into pattern }
+    callout_string_offset : PCRE2_SIZE; { Offset to string within pattern }
+    callout_string_length : PCRE2_SIZE; { Length of string compiled into
+                                          pattern }
+    callout_string : PCRE2_SPTR32;      { String compiled into pattern }
     { ------------------------------------------------------------------ }
   end;
 
@@ -492,10 +674,18 @@ type
   private_free_callback = procedure (ptr1 : Pointer; ptr2 : Pointer) of object;
   guard_function_callback = function (value : Cardinal; ptr : Pointer) : Integer
     of object;
-  callout_function_callback = function (block : ppcre2_callout_block) : Integer
-    of object;
-  pcre2_callout_enumerate_callback = function (block :
-    ppcre2_callout_enumerate_block; data : Pointer) : Integer of object;
+  callout_function_callback_8 = function (block : ppcre2_callout_block_8) :
+    Integer of object;
+  callout_function_callback_16 = function (block : ppcre2_callout_block_16) :
+    Integer of object;
+  callout_function_callback_32 = function (block : ppcre2_callout_block_32) :
+    Integer of object;
+  pcre2_callout_enumerate_callback_8 = function (block :
+    ppcre2_callout_enumerate_block_8; data : Pointer) : Integer of object;
+  pcre2_callout_enumerate_callback_16 = function (block :
+    ppcre2_callout_enumerate_block_16; data : Pointer) : Integer of object;
+  pcre2_callout_enumerate_callback_32 = function (block :
+    ppcre2_callout_enumerate_block_32; data : Pointer) : Integer of object;
 
 {$IFDEF WINDOWS}
   const PCRE2Lib = 'libpcre2.dll';
@@ -507,38 +697,100 @@ type
 { List the generic forms of all other functions in macros, which will be
   expanded for each width below. Start with functions that give general
   information. }
-function pcre2_config (what : Cardinal; where : Pointer) : Integer; cdecl;
+function pcre2_config_8 (what : Cardinal; where : Pointer) : Integer; cdecl;
+  external PCRE2Lib;
+function pcre2_config_16 (what : Cardinal; where : Pointer) : Integer; cdecl;
+  external PCRE2Lib;
+function pcre2_config_32 (what : Cardinal; where : Pointer) : Integer; cdecl;
   external PCRE2Lib;
 
 { Functions for manipulating contexts. }
-function pcre2_general_context_copy (gcontext : ppcre2_general_context) :
-  ppcre2_general_context; cdecl; external PCRE2Lib;
-function pcre2_general_context_create (private_malloc : private_malloc_callback;
-  private_free : private_free_callback; memory_data : Pointer) :
-  ppcre2_general_context; cdecl; external PCRE2Lib;
-procedure pcre2_general_context_free (gcontext : ppcre2_general_context); cdecl;
-  external PCRE2Lib;
-function pcre2_compile_context_copy (ccontext : ppcre2_compile_context) :
-  ppcre2_compile_context; cdecl; external PCRE2Lib;
-function pcre2_compile_context_create (gcontext : ppcre2_general_context) :
-  ppcre2_compile_context; cdecl; external PCRE2Lib;
-procedure pcre2_compile_context_free (ccontext : ppcre2_compile_context); cdecl;
-  external PCRE2Lib;
-function pcre2_set_bsr (ccontext : ppcre2_compile_context; value : Cardinal) :
-  Integer; cdecl; external PCRE2Lib;
-function pcre2_set_character_tables (ccontext : ppcre2_compile_context; const
-  tables : PByte) : Integer; cdecl; external PCRE2Lib;
-function pcre2_set_compile_extra_options (ccontext : ppcre2_compile_context;
-  extra_options : Cardinal) : Integer; cdecl; external PCRE2Lib;
-function pcre2_set_max_pattern_length (ccontext : ppcre2_compile_context;
-  value : PCRE2_SIZE) : Integer; cdecl; external PCRE2Lib;
-function pcre2_set_newline (ccontext : ppcre2_compile_context; value :
-  Cardinal) : Integer; cdecl; external PCRE2Lib;
-function pcre2_set_parens_nest_limit (ccontext : ppcre2_compile_context; value :
-  Cardinal) : Integer; cdecl; external PCRE2Lib;
-function pcre2_set_compile_recursion_guard (ccontext : ppcre2_compile_context;
-  guard_function : guard_function_callback; user_data : Pointer) : Integer;
+function pcre2_general_context_copy_8 (gcontext : ppcre2_general_context_8) :
+  ppcre2_general_context_8; cdecl; external PCRE2Lib;
+function pcre2_general_context_copy_16 (gcontext : ppcre2_general_context_16) :
+  ppcre2_general_context_16; cdecl; external PCRE2Lib;
+function pcre2_general_context_copy_32 (gcontext : ppcre2_general_context_32) :
+  ppcre2_general_context_32; cdecl; external PCRE2Lib;
+function pcre2_general_context_create_8 (private_malloc :
+  private_malloc_callback; private_free : private_free_callback; memory_data :
+  Pointer) : ppcre2_general_context_8; cdecl; external PCRE2Lib;
+function pcre2_general_context_create_16 (private_malloc :
+  private_malloc_callback; private_free : private_free_callback; memory_data :
+  Pointer) : ppcre2_general_context_16; cdecl; external PCRE2Lib;
+function pcre2_general_context_create_32 (private_malloc :
+  private_malloc_callback; private_free : private_free_callback; memory_data :
+  Pointer) : ppcre2_general_context_32; cdecl; external PCRE2Lib;
+procedure pcre2_general_context_free_8 (gcontext : ppcre2_general_context_8);
   cdecl; external PCRE2Lib;
+procedure pcre2_general_context_free_16 (gcontext : ppcre2_general_context_16);
+  cdecl; external PCRE2Lib;
+procedure pcre2_general_context_free_32 (gcontext : ppcre2_general_context_32);
+  cdecl; external PCRE2Lib;
+function pcre2_compile_context_copy_8 (ccontext : ppcre2_compile_context_8) :
+  ppcre2_compile_context_8; cdecl; external PCRE2Lib;
+function pcre2_compile_context_copy_16 (ccontext : ppcre2_compile_context_16) :
+  ppcre2_compile_context_16; cdecl; external PCRE2Lib;
+function pcre2_compile_context_copy_32 (ccontext : ppcre2_compile_context_32) :
+  ppcre2_compile_context_32; cdecl; external PCRE2Lib;
+function pcre2_compile_context_create_8 (gcontext : ppcre2_general_context_8) :
+  ppcre2_compile_context_8; cdecl; external PCRE2Lib;
+function pcre2_compile_context_create_16 (gcontext : ppcre2_general_context_16)
+  : ppcre2_compile_context_16; cdecl; external PCRE2Lib;
+function pcre2_compile_context_create_32 (gcontext : ppcre2_general_context_32)
+  : ppcre2_compile_context_32; cdecl; external PCRE2Lib;
+procedure pcre2_compile_context_free_8 (ccontext : ppcre2_compile_context_8);
+  cdecl; external PCRE2Lib;
+procedure pcre2_compile_context_free_16 (ccontext : ppcre2_compile_context_16);
+  cdecl; external PCRE2Lib;
+procedure pcre2_compile_context_free_32 (ccontext : ppcre2_compile_context_32);
+  cdecl; external PCRE2Lib;
+function pcre2_set_bsr_8 (ccontext : ppcre2_compile_context_8; value : Cardinal)
+  : Integer; cdecl; external PCRE2Lib;
+function pcre2_set_bsr_16 (ccontext : ppcre2_compile_context_16; value :
+  Cardinal) : Integer; cdecl; external PCRE2Lib;
+function pcre2_set_bsr_32 (ccontext : ppcre2_compile_context_32; value :
+  Cardinal) : Integer; cdecl; external PCRE2Lib;
+function pcre2_set_character_tables_8 (ccontext : ppcre2_compile_context_8;
+  const tables : PByte) : Integer; cdecl; external PCRE2Lib;
+function pcre2_set_character_tables_16 (ccontext : ppcre2_compile_context_16;
+  const tables : PByte) : Integer; cdecl; external PCRE2Lib;
+function pcre2_set_character_tables_32 (ccontext : ppcre2_compile_context_32;
+  const tables : PByte) : Integer; cdecl; external PCRE2Lib;
+function pcre2_set_compile_extra_options_8 (ccontext : ppcre2_compile_context_8;
+  extra_options : Cardinal) : Integer; cdecl; external PCRE2Lib;
+function pcre2_set_compile_extra_options_16 (ccontext :
+  ppcre2_compile_context_16; extra_options : Cardinal) : Integer; cdecl;
+  external PCRE2Lib;
+function pcre2_set_compile_extra_options_32 (ccontext :
+  ppcre2_compile_context_32; extra_options : Cardinal) : Integer; cdecl;
+  external PCRE2Lib;
+function pcre2_set_max_pattern_length_8 (ccontext : ppcre2_compile_context_8;
+  value : PCRE2_SIZE) : Integer; cdecl; external PCRE2Lib;
+function pcre2_set_max_pattern_length_16 (ccontext : ppcre2_compile_context_16;
+  value : PCRE2_SIZE) : Integer; cdecl; external PCRE2Lib;
+function pcre2_set_max_pattern_length_32 (ccontext : ppcre2_compile_context_32;
+  value : PCRE2_SIZE) : Integer; cdecl; external PCRE2Lib;
+function pcre2_set_newline_8 (ccontext : ppcre2_compile_context_8; value :
+  Cardinal) : Integer; cdecl; external PCRE2Lib;
+function pcre2_set_newline_16 (ccontext : ppcre2_compile_context_16; value :
+  Cardinal) : Integer; cdecl; external PCRE2Lib;
+function pcre2_set_newline_32 (ccontext : ppcre2_compile_context_32; value :
+  Cardinal) : Integer; cdecl; external PCRE2Lib;
+function pcre2_set_parens_nest_limit_8 (ccontext : ppcre2_compile_context_8;
+  value : Cardinal) : Integer; cdecl; external PCRE2Lib;
+function pcre2_set_parens_nest_limit_16 (ccontext : ppcre2_compile_context_16;
+  value : Cardinal) : Integer; cdecl; external PCRE2Lib;
+function pcre2_set_parens_nest_limit_32 (ccontext : ppcre2_compile_context_32;
+  value : Cardinal) : Integer; cdecl; external PCRE2Lib;
+function pcre2_set_compile_recursion_guard_8 (ccontext :
+  ppcre2_compile_context_8; guard_function : guard_function_callback;
+  user_data : Pointer) : Integer; cdecl; external PCRE2Lib;
+function pcre2_set_compile_recursion_guard_16 (ccontext :
+  ppcre2_compile_context_16; guard_function : guard_function_callback;
+  user_data : Pointer) : Integer; cdecl; external PCRE2Lib;
+function pcre2_set_compile_recursion_guard_32 (ccontext :
+  ppcre2_compile_context_32; guard_function : guard_function_callback;
+  user_data : Pointer) : Integer; cdecl; external PCRE2Lib;
 
 function pcre2_match_context_copy (mcontext : ppcre2_match_context) :
   ppcre2_match_context; cdecl; external PCRE2Lib;
@@ -606,6 +858,8 @@ function pcre2_match (const code : ppcre2_code; subject : PCRE2_SPTR; length :
   PCRE2_SIZE; startoffset : PCRE2_SIZE; options : Cardinal; match_data :
   ppcre2_match_data; mcontext : ppcre2_match_context) : Integer; cdecl;
   external PCRE2Lib;
+function pcre2_get_match_data_size (match_data : ppcre2_match_data) :
+  PCRE2_SIZE; cdecl; external PCRE2Lib;
 procedure pcre2_match_data_free (match_data : ppcre2_match_data); cdecl;
   external PCRE2Lib;
 function pcre2_get_mark (match_data : ppcre2_match_data) : PCRE2_SPTR; cdecl;
@@ -695,6 +949,8 @@ function pcre2_get_error_message (errorcode : Integer; buffer : PPCRE2_UCHAR;
   bufflen : PCRE2_SIZE) : Integer; cdecl; external PCRE2Lib;
 function pcre2_maketables (gcontext : ppcre2_general_context) : PByte; cdecl;
   external PCRE2Lib;
+procedure pcre2_maketables_free (gcontext : ppcre2_general_context;
+  const tables : PByte); cdecl; external PCRE2Lib;
 
 
 
