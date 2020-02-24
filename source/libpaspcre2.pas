@@ -38,6 +38,15 @@ uses
   {$PACKRECORDS C}
 {$ENDIF}
 
+{$IFDEF WINDOWS}
+  const PCRE2Lib = 'libpcre2-32.dll';
+{$ENDIF}
+{$IFDEF LINUX}
+  const PCRE2Lib = 'libpcre2-32.so';
+//const PCRE2Lib = 'libpcre2-16.so';
+//const PCRE2Lib = 'libpcre2-8.so';
+{$ENDIF}
+
 const
   { The following option bits can be passed to pcre2_compile(), pcre2_match(),
   or pcre2_dfa_match(). PCRE2_NO_UTF_CHECK affects only the function to which it
@@ -439,7 +448,7 @@ type
   //end;
   pcre2_real_compile_context_16 = type Pointer;
 
-  ppcre2_real_compile_context_32 = ^pcre2_real_compile_contex32;
+  ppcre2_real_compile_context_32 = ^pcre2_real_compile_context_32;
   //pcre2_real_compile_context_32 = record
   //end;
   pcre2_real_compile_context_32 = type Pointer;
@@ -722,13 +731,6 @@ type
     ppcre2_callout_enumerate_block_16; data : Pointer) : Integer of object;
   pcre2_callout_enumerate_callback_32 = function (block :
     ppcre2_callout_enumerate_block_32; data : Pointer) : Integer of object;
-
-{$IFDEF WINDOWS}
-  const PCRE2Lib = 'libpcre2.dll';
-{$ENDIF}
-{$IFDEF LINUX}
-  const PCRE2Lib = 'libpcre2.so';
-{$ENDIF}
 
 { List the generic forms of all other functions in macros, which will be
   expanded for each width below. Start with functions that give general
