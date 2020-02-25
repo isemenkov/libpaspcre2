@@ -38,13 +38,31 @@ uses
   {$PACKRECORDS C}
 {$ENDIF}
 
+{$IFNDEF PCRE8 AND PCRE16 AND PCRE32}
+  {$DEFINE PCRE16}
+{$ENDIF}
+
 {$IFDEF WINDOWS}
-  const PCRE2Lib = 'libpcre2-32.dll';
+  {$IFDEF PCRE8}
+    const PCRE2Lib = 'libpcre2-8.dll';
+  {$ENDIF}
+  {$IFDEF PCRE16}
+    const PCRE2Lib = 'libpcre2-16.dll';
+  {$ENDIF}
+  {$IFDEF PCRE32}
+    const PCRE2Lib = 'libpcre2-32.dll';
+  {$ENDIF}
 {$ENDIF}
 {$IFDEF LINUX}
-  const PCRE2Lib = 'libpcre2-32.so';
-//const PCRE2Lib = 'libpcre2-16.so';
-//const PCRE2Lib = 'libpcre2-8.so';
+  {$IFDEF PCRE8}
+    const PCRE2Lib = 'libpcre2-8.so';
+  {$ENDIF}
+  {$IFDEF PCRE16}
+    const PCRE2Lib = 'libpcre2-16.so';
+  {$ENDIF}
+  {$IFDEF PCRE32}
+    const PCRE2Lib = 'libpcre2-32.so';
+  {$ENDIF}
 {$ENDIF}
 
 const
@@ -380,30 +398,39 @@ const
   PCRE2_CALLOUT_STARTMATCH = { Set for each bumpalong }               $00000001;
   PCRE2_CALLOUT_BACKTRACK =  { Set after a backtrack }                $00000002;
 
-
-
-
 type
   { Types for code units in patterns and subject strings. }
-  PPPPCRE2_UCHAR8 = ^PPPCRE2_UCHAR8;
-  PPPCRE2_UCHAR8 = ^PPCRE2_UCHAR8;
-  PPCRE2_UCHAR8 = ^PCRE2_UCHAR8;
-  PCRE2_UCHAR8 = type Byte;
-  PPPPCRE2_UCHAR16 = ^PPPCRE2_UCHAR16;
-  PPPCRE2_UCHAR16 = ^PPCRE2_UCHAR16;
-  PPCRE2_UCHAR16 = ^PCRE2_UCHAR16;
-  PCRE2_UCHAR16 = type Word;
-  PPPPCRE2_UCHAR32 = ^PPPCRE2_UCHAR32;
-  PPPCRE2_UCHAR32 = ^PPCRE2_UCHAR32;
-  PPCRE2_UCHAR32 = ^PCRE2_UCHAR32;
-  PCRE2_UCHAR32 = type Cardinal;
+  {$IFDEF PCRE8}
+    PPPPCRE2_UCHAR8 = ^PPPCRE2_UCHAR8;
+    PPPCRE2_UCHAR8 = ^PPCRE2_UCHAR8;
+    PPCRE2_UCHAR8 = ^PCRE2_UCHAR8;
+    PCRE2_UCHAR8 = type Byte;
+  {$ENDIF}
+  {$IFDEF PCRE16}
+    PPPPCRE2_UCHAR16 = ^PPPCRE2_UCHAR16;
+    PPPCRE2_UCHAR16 = ^PPCRE2_UCHAR16;
+    PPCRE2_UCHAR16 = ^PCRE2_UCHAR16;
+    PCRE2_UCHAR16 = type Word;
+  {$ENDIF}
+  {$IFDEF PCRE32}
+    PPPPCRE2_UCHAR32 = ^PPPCRE2_UCHAR32;
+    PPPCRE2_UCHAR32 = ^PPCRE2_UCHAR32;
+    PPCRE2_UCHAR32 = ^PCRE2_UCHAR32;
+    PCRE2_UCHAR32 = type Cardinal;
+  {$ENDIF}
 
-  PPCRE2_SPTR8 = ^PCRE2_SPTR8;
-  PCRE2_SPTR8 = type ^PCRE2_UCHAR8;
-  PPCRE2_SPTR16 = ^PCRE2_SPTR16;
-  PCRE2_SPTR16 = type ^PCRE2_UCHAR16;
-  PPCRE2_SPTR32 = ^PCRE2_SPTR32;
-  PCRE2_SPTR32 = type ^PCRE2_UCHAR32;
+  {$IFDEF PCRE8}
+    PPCRE2_SPTR8 = ^PCRE2_SPTR8;
+    PCRE2_SPTR8 = type ^PCRE2_UCHAR8;
+  {$ENDIF}
+  {$IFDEF PCRE16}
+    PPCRE2_SPTR16 = ^PCRE2_SPTR16;
+    PCRE2_SPTR16 = type ^PCRE2_UCHAR16;
+  {$ENDIF}
+  {$IFDEF PCRE32}
+    PPCRE2_SPTR32 = ^PCRE2_SPTR32;
+    PCRE2_SPTR32 = type ^PCRE2_UCHAR32;
+  {$ENDIF}
 
   { The PCRE2_SIZE type is used for all string lengths and offsets in PCRE2,
     including pattern offsets for errors and subject offsets after a match. We
@@ -414,323 +441,358 @@ type
   PCRE2_SIZE = type QWord;
 
   { Generic types for opaque structures and JIT callback functions. }
-  ppcre2_real_general_context_8 = ^pcre2_real_general_context_8;
-  //pcre2_real_general_context_8 = record
-  //end;
-  pcre2_real_general_context_8 = type Pointer;
+  {$IFDEF PCRE8}
+    ppcre2_real_general_context_8 = ^pcre2_real_general_context_8;
+    pcre2_real_general_context_8 = type Pointer;
+  {$ENDIF}
+  {$IFDEF PCRE16}
+    ppcre2_real_general_context_16 = ^pcre2_real_general_context_16;
+    pcre2_real_general_context_16 = type Pointer;
+  {$ENDIF}
+  {$IFDEF PCRE32}
+    ppcre2_real_general_context_32 = ^pcre2_real_general_context_32;
+    pcre2_real_general_context_32 = type Pointer;
+  {$ENDIF}
 
-  ppcre2_real_general_context_16 = ^pcre2_real_general_context_16;
-  //pcre2_real_general_context_16 = record
-  //end;
-  pcre2_real_general_context_16 = type Pointer;
+  {$IFDEF PCRE8}
+    ppcre2_general_context_8 = ^pcre2_general_context_8;
+    pcre2_general_context_8 = pcre2_real_general_context_8;
+  {$ENDIF}
+  {$IFDEF PCRE16}
+    ppcre2_general_context_16 = ^pcre2_general_context_16;
+    pcre2_general_context_16 = pcre2_real_general_context_16;
+  {$ENDIF}
+  {$IFDEF PCRE32}
+    ppcre2_general_context_32 = ^pcre2_general_context_32;
+    pcre2_general_context_32 = pcre2_real_general_context_32;
+  {$ENDIF}
 
-  ppcre2_real_general_context_32 = ^pcre2_real_general_context_32;
-  //pcre2_real_general_context_32 = record
-  //end;
-  pcre2_real_general_context_32 = type Pointer;
+  {$IFDEF PCRE8}
+    ppcre2_real_compile_context_8 = ^pcre2_real_compile_context_8;
+    pcre2_real_compile_context_8 = type Pointer;
+  {$ENDIF}
+  {$IFDEF PCRE16}
+    ppcre2_real_compile_context_16 = ^pcre2_real_compile_context_16;
+    pcre2_real_compile_context_16 = type Pointer;
+  {$ENDIF}
+  {$IFDEF PCRE32}
+    ppcre2_real_compile_context_32 = ^pcre2_real_compile_context_32;
+    pcre2_real_compile_context_32 = type Pointer;
+  {$ENDIF}
 
-  ppcre2_general_context_8 = ^pcre2_general_context_8;
-  pcre2_general_context_8 = pcre2_real_general_context_8;
+  {$IFDEF PCRE8}
+    ppcre2_compile_context_8 = ^pcre2_compile_context_8;
+    pcre2_compile_context_8 = pcre2_real_compile_context_8;
+  {$ENDIF}
+  {$IFDEF PCRE16}
+    ppcre2_compile_context_16 = ^pcre2_compile_context_16;
+    pcre2_compile_context_16 = pcre2_real_compile_context_16;
+  {$ENDIF}
+  {$IFDEF PCRE32}
+    ppcre2_compile_context_32 = ^pcre2_compile_context_32;
+    pcre2_compile_context_32 = pcre2_real_compile_context_32;
+  {$ENDIF}
 
-  ppcre2_general_context_16 = ^pcre2_general_context_16;
-  pcre2_general_context_16 = pcre2_real_general_context_16;
+  {$IFDEF PCRE8}
+    ppcre2_real_match_context_8 = ^pcre2_real_match_context_8;
+    pcre2_real_match_context_8 = type Pointer;
+  {$ENDIF}
+  {$IFDEF PCRE16}
+    ppcre2_real_match_context_16 = ^pcre2_real_match_context_16;
+    pcre2_real_match_context_16 = type Pointer;
+  {$ENDIF}
+  {$IFDEF PCRE32}
+    ppcre2_real_match_context_32 = ^pcre2_real_match_context_32;
+    pcre2_real_match_context_32 = type Pointer;
+  {$ENDIF}
 
-  ppcre2_general_context_32 = ^pcre2_general_context_32;
-  pcre2_general_context_32 = pcre2_real_general_context_32;
+  {$IFDEF PCRE8}
+    ppcre2_match_context_8 = ^pcre2_match_context_8;
+    pcre2_match_context_8 = pcre2_real_match_context_8;
+  {$ENDIF}
+  {$IFDEF PCRE16}
+    ppcre2_match_context_16 = ^pcre2_match_context_16;
+    pcre2_match_context_16 = pcre2_real_match_context_16;
+  {$ENDIF}
+  {$IFDEF PCRE32}
+    ppcre2_match_context_32 = ^pcre2_match_context_32;
+    pcre2_match_context_32 = pcre2_real_match_context_32;
+  {$ENDIF}
 
-  ppcre2_real_compile_context_8 = ^pcre2_real_compile_context_8;
-  //pcre2_real_compile_context_8 = record
-  //end;
-  pcre2_real_compile_context_8 = type Pointer;
+  {$IFDEF PCRE8}
+    ppcre2_real_convert_context_8 = ^pcre2_real_convert_context_8;
+    pcre2_real_convert_context_8 = type Pointer;
+  {$ENDIF}
+  {$IFDEF PCRE16}
+    ppcre2_real_convert_context_16 = ^pcre2_real_convert_context_16;
+    pcre2_real_convert_context_16 = type Pointer;
+  {$ENDIF}
+  {$IFDEF PCRE32}
+    ppcre2_real_convert_context_32 = ^pcre2_real_convert_context_32;
+    pcre2_real_convert_context_32 = type Pointer;
+  {$ENDIF}
 
-  ppcre2_real_compile_context_16 = ^pcre2_real_compile_context_16;
-  //pcre2_real_compile_context_16 = record
-  //end;
-  pcre2_real_compile_context_16 = type Pointer;
+  {$IFDEF PCRE8}
+    ppcre2_convert_context_8 = ^pcre2_convert_context_8;
+    pcre2_convert_context_8 = pcre2_real_convert_context_8;
+  {$ENDIF}
+  {$IFDEF PCRE16}
+    ppcre2_convert_context_16 = ^pcre2_convert_context_16;
+    pcre2_convert_context_16 = pcre2_real_convert_context_16;
+  {$ENDIF}
+  {$IFDEF PCRE32}
+    ppcre2_convert_context_32 = ^pcre2_convert_context_32;
+    pcre2_convert_context_32 = pcre2_real_convert_context_32;
+  {$ENDIF}
 
-  ppcre2_real_compile_context_32 = ^pcre2_real_compile_context_32;
-  //pcre2_real_compile_context_32 = record
-  //end;
-  pcre2_real_compile_context_32 = type Pointer;
+  {$IFDEF PCRE8}
+    ppcre2_real_code_8 = ^pcre2_real_code_8;
+    pcre2_real_code_8 = type Pointer;
+  {$ENDIF}
+  {$IFDEF PCRE16}
+    ppcre2_real_code_16 = ^pcre2_real_code_16;
+    pcre2_real_code_16 = type Pointer;
+  {$ENDIF}
+  {$IFDEF PCRE32}
+    ppcre2_real_code_32 = ^pcre2_real_code_32;
+    pcre2_real_code_32 = type Pointer;
+  {$ENDIF}
 
-  ppcre2_compile_context_8 = ^pcre2_compile_context_8;
-  pcre2_compile_context_8 = pcre2_real_compile_context_8;
+  {$IFDEF PCRE8}
+    pppcre2_code_8 = ^ppcre2_code_8;
+    ppcre2_code_8 = ^pcre2_code_8;
+    pcre2_code_8 = pcre2_real_code_8;
+  {$ENDIF}
+  {$IFDEF PCRE16}
+    pppcre2_code_16 = ^ppcre2_code_16;
+    ppcre2_code_16 = ^pcre2_code_16;
+    pcre2_code_16 = pcre2_real_code_16;
+  {$ENDIF}
+  {$IFDEF PCRE32}
+    pppcre2_code_32 = ^ppcre2_code_32;
+    ppcre2_code_32 = ^pcre2_code_32;
+    pcre2_code_32 = pcre2_real_code_32;
+  {$ENDIF}
 
-  ppcre2_compile_context_16 = ^pcre2_compile_context_16;
-  pcre2_compile_context_16 = pcre2_real_compile_context_16;
+  {$IFDEF PCRE8}
+    ppcre2_real_match_data_8 = ^pcre2_real_match_data_8;
+    pcre2_real_match_data_8 = type Pointer;
+  {$ENDIF}
+  {$IFDEF PCRE16}
+    ppcre2_real_match_data_16 = ^pcre2_real_match_data_16;
+    pcre2_real_match_data_16 = type Pointer;
+  {$ENDIF}
+  {$IFDEF PCRE32}
+    ppcre2_real_match_data_32 = ^pcre2_real_match_data_32;
+    pcre2_real_match_data_32 = type Pointer;
+  {$ENDIF}
 
-  ppcre2_compile_context_32 = ^pcre2_compile_context_32;
-  pcre2_compile_context_32 = pcre2_real_compile_context_32;
+  {$IFDEF PCRE8}
+    ppcre2_match_data_8 = ^pcre2_match_data_8;
+    pcre2_match_data_8 = pcre2_real_match_data_8;
+  {$ENDIF}
+  {$IFDEF PCRE16}
+    ppcre2_match_data_16 = ^pcre2_match_data_16;
+    pcre2_match_data_16 = pcre2_real_match_data_16;
+  {$ENDIF}
+  {$IFDEF PCRE32}
+    ppcre2_match_data_32 = ^pcre2_match_data_32;
+    pcre2_match_data_32 = pcre2_real_match_data_32;
+  {$ENDIF}
 
-  ppcre2_real_match_context_8 = ^pcre2_real_match_context_8;
-  //pcre2_real_match_context_8 = record
-  //end;
-  pcre2_real_match_context_8 = type Pointer;
+  {$IFDEF PCRE8}
+    ppcre2_real_jit_stack_8 = ^pcre2_real_jit_stack_8;
+    pcre2_real_jit_stack_8 = type Pointer;
+  {$ENDIF}
+  {$IFDEF PCRE16}
+    ppcre2_real_jit_stack_16 = ^pcre2_real_jit_stack_16;
+    pcre2_real_jit_stack_16 = type Pointer;
+  {$ENDIF}
+  {$IFDEF PCRE32}
+    ppcre2_real_jit_stack_32 = ^pcre2_real_jit_stack_32;
+    pcre2_real_jit_stack_32 = type Pointer;
+  {$ENDIF}
 
-  ppcre2_real_match_context_16 = ^pcre2_real_match_context_16;
-  //pcre2_real_match_context_16 = record
-  //end;
-  pcre2_real_match_context_16 = type Pointer;
+  {$IFDEF PCRE8}
+    ppcre2_jit_stack_8 = ^pcre2_jit_stack_8;
+    pcre2_jit_stack_8 = pcre2_real_jit_stack_8;
+  {$ENDIF}
+  {$IFDEF PCRE16}
+    ppcre2_jit_stack_16 = ^pcre2_jit_stack_16;
+    pcre2_jit_stack_16 = pcre2_real_jit_stack_16;
+  {$ENDIF}
+  {$IFDEF PCRE32}
+    ppcre2_jit_stack_32 = ^pcre2_jit_stack_32;
+    pcre2_jit_stack_32 = pcre2_real_jit_stack_32;
+  {$ENDIF}
 
-  ppcre2_real_match_context_32 = ^pcre2_real_match_context_32;
-  //pcre2_real_match_context_32 = record
-  //end;
-  pcre2_real_match_context_32 = type Pointer;
-
-  ppcre2_match_context_8 = ^pcre2_match_context_8;
-  pcre2_match_context_8 = pcre2_real_match_context_8;
-
-  ppcre2_match_context_16 = ^pcre2_match_context_16;
-  pcre2_match_context_16 = pcre2_real_match_context_16;
-
-  ppcre2_match_context_32 = ^pcre2_match_context_32;
-  pcre2_match_context_32 = pcre2_real_match_context_32;
-
-  ppcre2_real_convert_context_8 = ^pcre2_real_convert_context_8;
-  //pcre2_real_convert_context_8 = record
-  //end;
-  pcre2_real_convert_context_8 = type Pointer;
-
-  ppcre2_real_convert_context_16 = ^pcre2_real_convert_context_16;
-  //pcre2_real_convert_context_16 = record
-  //end;
-  pcre2_real_convert_context_16 = type Pointer;
-
-  ppcre2_real_convert_context_32 = ^pcre2_real_convert_context_32;
-  //pcre2_real_convert_context_32 = record
-  //end;
-  pcre2_real_convert_context_32 = type Pointer;
-
-  ppcre2_convert_context_8 = ^pcre2_convert_context_8;
-  pcre2_convert_context_8 = pcre2_real_convert_context_8;
-
-  ppcre2_convert_context_16 = ^pcre2_convert_context_16;
-  pcre2_convert_context_16 = pcre2_real_convert_context_16;
-
-  ppcre2_convert_context_32 = ^pcre2_convert_context_32;
-  pcre2_convert_context_32 = pcre2_real_convert_context_32;
-
-  ppcre2_real_code_8 = ^pcre2_real_code_8;
-  //pcre2_real_code_8 = record
-  //end;
-  pcre2_real_code_8 = type Pointer;
-
-  ppcre2_real_code_16 = ^pcre2_real_code_16;
-  //pcre2_real_code_16 = record
-  //end;
-  pcre2_real_code_16 = type Pointer;
-
-  ppcre2_real_code_32 = ^pcre2_real_code_32;
-  //pcre2_real_code_32 = record
-  //end;
-  pcre2_real_code_32 = type Pointer;
-
-  pppcre2_code_8 = ^ppcre2_code_8;
-  ppcre2_code_8 = ^pcre2_code_8;
-  pcre2_code_8 = pcre2_real_code_8;
-
-  pppcre2_code_16 = ^ppcre2_code_16;
-  ppcre2_code_16 = ^pcre2_code_16;
-  pcre2_code_16 = pcre2_real_code_16;
-
-  pppcre2_code_32 = ^ppcre2_code_32;
-  ppcre2_code_32 = ^pcre2_code_32;
-  pcre2_code_32 = pcre2_real_code_32;
-
-  ppcre2_real_match_data_8 = ^pcre2_real_match_data_8;
-  //pcre2_real_match_data_8 = record
-  //end;
-  pcre2_real_match_data_8 = type Pointer;
-
-  ppcre2_real_match_data_16 = ^pcre2_real_match_data_16;
-  //pcre2_real_match_data_16 = record
-  //end;
-  pcre2_real_match_data_16 = type Pointer;
-
-  ppcre2_real_match_data_32 = ^pcre2_real_match_data_32;
-  //pcre2_real_match_data_32 = record
-  //end;
-  pcre2_real_match_data_32 = type Pointer;
-
-  ppcre2_match_data_8 = ^pcre2_match_data_8;
-  pcre2_match_data_8 = pcre2_real_match_data_8;
-
-  ppcre2_match_data_16 = ^pcre2_match_data_16;
-  pcre2_match_data_16 = pcre2_real_match_data_16;
-
-  ppcre2_match_data_32 = ^pcre2_match_data_32;
-  pcre2_match_data_32 = pcre2_real_match_data_32;
-
-  ppcre2_real_jit_stack_8 = ^pcre2_real_jit_stack_8;
-  //pcre2_real_jit_stack_8 = record
-  //end;
-  pcre2_real_jit_stack_8 = type Pointer;
-
-  ppcre2_real_jit_stack_16 = ^pcre2_real_jit_stack_16;
-  //pcre2_real_jit_stack_16 = record
-  //end;
-  pcre2_real_jit_stack_16 = type Pointer;
-
-  ppcre2_real_jit_stack_32 = ^pcre2_real_jit_stack_32;
-  //pcre2_real_jit_stack_32 = record
-  //end;
-  pcre2_real_jit_stack_32 = type Pointer;
-
-  ppcre2_jit_stack_8 = ^pcre2_jit_stack_8;
-  pcre2_jit_stack_8 = pcre2_real_jit_stack_8;
-
-  ppcre2_jit_stack_16 = ^pcre2_jit_stack_16;
-  pcre2_jit_stack_16 = pcre2_real_jit_stack_16;
-
-  ppcre2_jit_stack_32 = ^pcre2_jit_stack_32;
-  pcre2_jit_stack_32 = pcre2_real_jit_stack_32;
-
-  pcre2_jit_callback_8 = function (ptr : Pointer) : ppcre2_jit_stack_8
-    of object;
-  pcre2_jit_callback_16 = function (ptr : Pointer) : ppcre2_jit_stack_16
-    of object;
-  pcre2_jit_callback_32 = function (ptr : Pointer) : ppcre2_jit_stack_32
-    of object;
+  {$IFDEF PCRE8}
+    pcre2_jit_callback_8 = function (ptr : Pointer) : ppcre2_jit_stack_8
+      of object;
+  {$ENDIF}
+  {$IFDEF PCRE16}
+    pcre2_jit_callback_16 = function (ptr : Pointer) : ppcre2_jit_stack_16
+      of object;
+  {$ENDIF}
+  {$IFDEF PCRE32}
+    pcre2_jit_callback_32 = function (ptr : Pointer) : ppcre2_jit_stack_32
+      of object;
+  {$ENDIF}
 
   { The structure for passing out data via the pcre_callout_function. We use a
     structure so that new fields can be added on the end in future versions,
     without changing the API of the function, thereby allowing old clients to
     work without modification. Define the generic version in a macro; the
     width-specific versions are generated from this macro below. }
-  ppcre2_callout_block_8 = ^pcre2_callout_block_8;
-  pcre2_callout_block_8 = record
-    version : Cardinal;                 { Identifies version of block }
-    { ------------------------ Version 0 ------------------------------- }
-    callout_number : Cardinal;          { Number compiled into pattern }
-    capture_top : Cardinal;             { Max current capture }
-    capture_last : Cardinal;            { Most recently closed capture }
-    offset_vector : PPCRE2_SIZE;        { The offset vector }
-    mark : PCRE2_SPTR8;                 { Pointer to current mark or NULL }
-    subject : PCRE2_SPTR8;              { The subject being matched }
-    subject_length : PCRE2_SIZE;        { The length of the subject }
-    start_match : PCRE2_SIZE;           { Offset to start of this match attempt}
-    current_position : PCRE2_SIZE;      { Where we currently are in the subject}
-    pattern_position : PCRE2_SIZE;      { Offset to next item in the pattern }
-    next_item_length : PCRE2_SIZE;      { Length of next item in the pattern }
-    { ------------------- Added for Version 1 -------------------------- }
-    callout_string_offset : PCRE2_SIZE; { Offset to string within pattern }
-    callout_string_length : PCRE2_SIZE; { Length of string compiled into
-                                          pattern }
-    callout_string : PCRE2_SPTR8;       { String compiled into pattern }
-    { ------------------- Added for Version 2 -------------------------- }
-    callout_flags : Cardinal;           { See above for list }
-    { ------------------------------------------------------------------ }
-  end;
+  {$IFDEF PCRE8}
+    ppcre2_callout_block_8 = ^pcre2_callout_block_8;
+    pcre2_callout_block_8 = record
+      version : Cardinal;                 { Identifies version of block }
+      { ------------------------ Version 0 ------------------------------- }
+      callout_number : Cardinal;          { Number compiled into pattern }
+      capture_top : Cardinal;             { Max current capture }
+      capture_last : Cardinal;            { Most recently closed capture }
+      offset_vector : PPCRE2_SIZE;        { The offset vector }
+      mark : PCRE2_SPTR8;                 { Pointer to current mark or NULL }
+      subject : PCRE2_SPTR8;              { The subject being matched }
+      subject_length : PCRE2_SIZE;        { The length of the subject }
+      start_match : PCRE2_SIZE;         { Offset to start of this match attempt}
+      current_position : PCRE2_SIZE;    { Where we currently are in the subject}
+      pattern_position : PCRE2_SIZE;      { Offset to next item in the pattern }
+      next_item_length : PCRE2_SIZE;      { Length of next item in the pattern }
+      { ------------------- Added for Version 1 -------------------------- }
+      callout_string_offset : PCRE2_SIZE; { Offset to string within pattern }
+      callout_string_length : PCRE2_SIZE; { Length of string compiled into
+                                            pattern }
+      callout_string : PCRE2_SPTR8;       { String compiled into pattern }
+      { ------------------- Added for Version 2 -------------------------- }
+      callout_flags : Cardinal;           { See above for list }
+      { ------------------------------------------------------------------ }
+    end;
+  {$ENDIF}
+  {$IFDEF PCRE16}
+    ppcre2_callout_block_16 = ^pcre2_callout_block_16;
+    pcre2_callout_block_16 = record
+      version : Cardinal;                 { Identifies version of block }
+      { ------------------------ Version 0 ------------------------------- }
+      callout_number : Cardinal;          { Number compiled into pattern }
+      capture_top : Cardinal;             { Max current capture }
+      capture_last : Cardinal;            { Most recently closed capture }
+      offset_vector : PPCRE2_SIZE;        { The offset vector }
+      mark : PCRE2_SPTR16;                { Pointer to current mark or NULL }
+      subject : PCRE2_SPTR16;             { The subject being matched }
+      subject_length : PCRE2_SIZE;        { The length of the subject }
+      start_match : PCRE2_SIZE;         { Offset to start of this match attempt}
+      current_position : PCRE2_SIZE;    { Where we currently are in the subject}
+      pattern_position : PCRE2_SIZE;      { Offset to next item in the pattern }
+      next_item_length : PCRE2_SIZE;      { Length of next item in the pattern }
+      { ------------------- Added for Version 1 -------------------------- }
+      callout_string_offset : PCRE2_SIZE; { Offset to string within pattern }
+      callout_string_length : PCRE2_SIZE; { Length of string compiled into
+                                            pattern }
+      callout_string : PCRE2_SPTR16;      { String compiled into pattern }
+      { ------------------- Added for Version 2 -------------------------- }
+      callout_flags : Cardinal;           { See above for list }
+      { ------------------------------------------------------------------ }
+    end;
+  {$ENDIF}
+  {$IFDEF PCRE32}
+    ppcre2_callout_block_32 = ^pcre2_callout_block_32;
+    pcre2_callout_block_32 = record
+      version : Cardinal;                 { Identifies version of block }
+      { ------------------------ Version 0 ------------------------------- }
+      callout_number : Cardinal;          { Number compiled into pattern }
+      capture_top : Cardinal;             { Max current capture }
+      capture_last : Cardinal;            { Most recently closed capture }
+      offset_vector : PPCRE2_SIZE;        { The offset vector }
+      mark : PCRE2_SPTR32;                { Pointer to current mark or NULL }
+      subject : PCRE2_SPTR32;             { The subject being matched }
+      subject_length : PCRE2_SIZE;        { The length of the subject }
+      start_match : PCRE2_SIZE;         { Offset to start of this match attempt}
+      current_position : PCRE2_SIZE;    { Where we currently are in the subject}
+      pattern_position : PCRE2_SIZE;      { Offset to next item in the pattern }
+      next_item_length : PCRE2_SIZE;      { Length of next item in the pattern }
+      { ------------------- Added for Version 1 -------------------------- }
+      callout_string_offset : PCRE2_SIZE; { Offset to string within pattern }
+      callout_string_length : PCRE2_SIZE; { Length of string compiled into
+                                            pattern }
+      callout_string : PCRE2_SPTR32;      { String compiled into pattern }
+      { ------------------- Added for Version 2 -------------------------- }
+      callout_flags : Cardinal;           { See above for list }
+      { ------------------------------------------------------------------ }
+    end;
+  {$ENDIF}
 
-  ppcre2_callout_block_16 = ^pcre2_callout_block_16;
-  pcre2_callout_block_16 = record
-    version : Cardinal;                 { Identifies version of block }
-    { ------------------------ Version 0 ------------------------------- }
-    callout_number : Cardinal;          { Number compiled into pattern }
-    capture_top : Cardinal;             { Max current capture }
-    capture_last : Cardinal;            { Most recently closed capture }
-    offset_vector : PPCRE2_SIZE;        { The offset vector }
-    mark : PCRE2_SPTR16;                { Pointer to current mark or NULL }
-    subject : PCRE2_SPTR16;             { The subject being matched }
-    subject_length : PCRE2_SIZE;        { The length of the subject }
-    start_match : PCRE2_SIZE;           { Offset to start of this match attempt}
-    current_position : PCRE2_SIZE;      { Where we currently are in the subject}
-    pattern_position : PCRE2_SIZE;      { Offset to next item in the pattern }
-    next_item_length : PCRE2_SIZE;      { Length of next item in the pattern }
-    { ------------------- Added for Version 1 -------------------------- }
-    callout_string_offset : PCRE2_SIZE; { Offset to string within pattern }
-    callout_string_length : PCRE2_SIZE; { Length of string compiled into
-                                          pattern }
-    callout_string : PCRE2_SPTR16;      { String compiled into pattern }
-    { ------------------- Added for Version 2 -------------------------- }
-    callout_flags : Cardinal;           { See above for list }
-    { ------------------------------------------------------------------ }
-  end;
-
-  ppcre2_callout_block_32 = ^pcre2_callout_block_32;
-  pcre2_callout_block_32 = record
-    version : Cardinal;                 { Identifies version of block }
-    { ------------------------ Version 0 ------------------------------- }
-    callout_number : Cardinal;          { Number compiled into pattern }
-    capture_top : Cardinal;             { Max current capture }
-    capture_last : Cardinal;            { Most recently closed capture }
-    offset_vector : PPCRE2_SIZE;        { The offset vector }
-    mark : PCRE2_SPTR32;                { Pointer to current mark or NULL }
-    subject : PCRE2_SPTR32;             { The subject being matched }
-    subject_length : PCRE2_SIZE;        { The length of the subject }
-    start_match : PCRE2_SIZE;           { Offset to start of this match attempt}
-    current_position : PCRE2_SIZE;      { Where we currently are in the subject}
-    pattern_position : PCRE2_SIZE;      { Offset to next item in the pattern }
-    next_item_length : PCRE2_SIZE;      { Length of next item in the pattern }
-    { ------------------- Added for Version 1 -------------------------- }
-    callout_string_offset : PCRE2_SIZE; { Offset to string within pattern }
-    callout_string_length : PCRE2_SIZE; { Length of string compiled into
-                                          pattern }
-    callout_string : PCRE2_SPTR32;      { String compiled into pattern }
-    { ------------------- Added for Version 2 -------------------------- }
-    callout_flags : Cardinal;           { See above for list }
-    { ------------------------------------------------------------------ }
-  end;
-
-  ppcre2_callout_enumerate_block_8 = ^pcre2_callout_enumerate_block_8;
-  pcre2_callout_enumerate_block_8 = record
-    version : Cardinal;                 { Identifies version of block }
-    { ------------------------ Version 0 ------------------------------- }
-    pattern_position : PCRE2_SIZE;      { Offset to next item in the pattern }
-    next_item_length : PCRE2_SIZE;      { Length of next item in the pattern }
-    callout_number : Cardinal;          { Number compiled into pattern }
-    callout_string_offset : PCRE2_SIZE; { Offset to string within pattern }
-    callout_string_length : PCRE2_SIZE; { Length of string compiled into
-                                          pattern }
-    callout_string : PCRE2_SPTR8;       { String compiled into pattern }
-    { ------------------------------------------------------------------ }
-  end;
-
-  ppcre2_callout_enumerate_block_16 = ^pcre2_callout_enumerate_block_16;
-  pcre2_callout_enumerate_block_16 = record
-    version : Cardinal;                 { Identifies version of block }
-    { ------------------------ Version 0 ------------------------------- }
-    pattern_position : PCRE2_SIZE;      { Offset to next item in the pattern }
-    next_item_length : PCRE2_SIZE;      { Length of next item in the pattern }
-    callout_number : Cardinal;          { Number compiled into pattern }
-    callout_string_offset : PCRE2_SIZE; { Offset to string within pattern }
-    callout_string_length : PCRE2_SIZE; { Length of string compiled into
-                                          pattern }
-    callout_string : PCRE2_SPTR16;      { String compiled into pattern }
-    { ------------------------------------------------------------------ }
-  end;
-
-  ppcre2_callout_enumerate_block_32 = ^pcre2_callout_enumerate_block_32;
-  pcre2_callout_enumerate_block_32 = record
-    version : Cardinal;                 { Identifies version of block }
-    { ------------------------ Version 0 ------------------------------- }
-    pattern_position : PCRE2_SIZE;      { Offset to next item in the pattern }
-    next_item_length : PCRE2_SIZE;      { Length of next item in the pattern }
-    callout_number : Cardinal;          { Number compiled into pattern }
-    callout_string_offset : PCRE2_SIZE; { Offset to string within pattern }
-    callout_string_length : PCRE2_SIZE; { Length of string compiled into
-                                          pattern }
-    callout_string : PCRE2_SPTR32;      { String compiled into pattern }
-    { ------------------------------------------------------------------ }
-  end;
+  {$IFDEF PCRE8}
+    ppcre2_callout_enumerate_block_8 = ^pcre2_callout_enumerate_block_8;
+    pcre2_callout_enumerate_block_8 = record
+      version : Cardinal;                 { Identifies version of block }
+      { ------------------------ Version 0 ------------------------------- }
+      pattern_position : PCRE2_SIZE;      { Offset to next item in the pattern }
+      next_item_length : PCRE2_SIZE;      { Length of next item in the pattern }
+      callout_number : Cardinal;          { Number compiled into pattern }
+      callout_string_offset : PCRE2_SIZE; { Offset to string within pattern }
+      callout_string_length : PCRE2_SIZE; { Length of string compiled into
+                                            pattern }
+      callout_string : PCRE2_SPTR8;       { String compiled into pattern }
+      { ------------------------------------------------------------------ }
+    end;
+  {$ENDIF}
+  {$IFDEF PCRE16}
+    ppcre2_callout_enumerate_block_16 = ^pcre2_callout_enumerate_block_16;
+    pcre2_callout_enumerate_block_16 = record
+      version : Cardinal;                 { Identifies version of block }
+      { ------------------------ Version 0 ------------------------------- }
+      pattern_position : PCRE2_SIZE;      { Offset to next item in the pattern }
+      next_item_length : PCRE2_SIZE;      { Length of next item in the pattern }
+      callout_number : Cardinal;          { Number compiled into pattern }
+      callout_string_offset : PCRE2_SIZE; { Offset to string within pattern }
+      callout_string_length : PCRE2_SIZE; { Length of string compiled into
+                                            pattern }
+      callout_string : PCRE2_SPTR16;      { String compiled into pattern }
+      { ------------------------------------------------------------------ }
+    end;
+  {$ENDIF}
+  {$IFDEF PCRE32}
+    ppcre2_callout_enumerate_block_32 = ^pcre2_callout_enumerate_block_32;
+    pcre2_callout_enumerate_block_32 = record
+      version : Cardinal;                 { Identifies version of block }
+      { ------------------------ Version 0 ------------------------------- }
+      pattern_position : PCRE2_SIZE;      { Offset to next item in the pattern }
+      next_item_length : PCRE2_SIZE;      { Length of next item in the pattern }
+      callout_number : Cardinal;          { Number compiled into pattern }
+      callout_string_offset : PCRE2_SIZE; { Offset to string within pattern }
+      callout_string_length : PCRE2_SIZE; { Length of string compiled into
+                                            pattern }
+      callout_string : PCRE2_SPTR32;      { String compiled into pattern }
+      { ------------------------------------------------------------------ }
+    end;
+  {$ENDIF}
 
   private_malloc_callback = function (size : PCRE2_SIZE; ptr : Pointer) :
     Pointer of object;
   private_free_callback = procedure (ptr1 : Pointer; ptr2 : Pointer) of object;
   guard_function_callback = function (value : Cardinal; ptr : Pointer) : Integer
     of object;
-  callout_function_callback_8 = function (block : ppcre2_callout_block_8) :
-    Integer of object;
-  callout_function_callback_16 = function (block : ppcre2_callout_block_16) :
-    Integer of object;
-  callout_function_callback_32 = function (block : ppcre2_callout_block_32) :
-    Integer of object;
-  pcre2_callout_enumerate_callback_8 = function (block :
-    ppcre2_callout_enumerate_block_8; data : Pointer) : Integer of object;
-  pcre2_callout_enumerate_callback_16 = function (block :
-    ppcre2_callout_enumerate_block_16; data : Pointer) : Integer of object;
-  pcre2_callout_enumerate_callback_32 = function (block :
-    ppcre2_callout_enumerate_block_32; data : Pointer) : Integer of object;
+
+  {$IFDEF PCRE8}
+    callout_function_callback_8 = function (block : ppcre2_callout_block_8) :
+      Integer of object;
+    pcre2_callout_enumerate_callback_8 = function (block :
+      ppcre2_callout_enumerate_block_8; data : Pointer) : Integer of object;
+  {$ENDIF}
+  {$IFDEF PCRE16}
+    callout_function_callback_16 = function (block : ppcre2_callout_block_16) :
+      Integer of object;
+    pcre2_callout_enumerate_callback_16 = function (block :
+      ppcre2_callout_enumerate_block_16; data : Pointer) : Integer of object;
+  {$ENDIF}
+  {$IFDEF PCRE32}
+    callout_function_callback_32 = function (block : ppcre2_callout_block_32) :
+      Integer of object;
+    pcre2_callout_enumerate_callback_32 = function (block :
+      ppcre2_callout_enumerate_block_32; data : Pointer) : Integer of object;
+  {$ENDIF}
 
 { List the generic forms of all other functions in macros, which will be
   expanded for each width below. Start with functions that give general
