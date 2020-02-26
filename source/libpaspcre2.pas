@@ -797,347 +797,376 @@ type
 { List the generic forms of all other functions in macros, which will be
   expanded for each width below. Start with functions that give general
   information. }
+{$IFDEF PCRE8}
 function pcre2_config_8 (what : Cardinal; where : Pointer) : Integer; cdecl;
   external PCRE2Lib;
+{$ENDIF}
+{$IFDEF PCRE16}
 function pcre2_config_16 (what : Cardinal; where : Pointer) : Integer; cdecl;
   external PCRE2Lib;
+{$ENDIF}
+{$IFDEF PCRE32}
 function pcre2_config_32 (what : Cardinal; where : Pointer) : Integer; cdecl;
   external PCRE2Lib;
+{$ENDIF}
 
 { Functions for manipulating contexts. }
+{$IFDEF PCRE8}
 function pcre2_general_context_copy_8 (gcontext : ppcre2_general_context_8) :
   ppcre2_general_context_8; cdecl; external PCRE2Lib;
-function pcre2_general_context_copy_16 (gcontext : ppcre2_general_context_16) :
-  ppcre2_general_context_16; cdecl; external PCRE2Lib;
-function pcre2_general_context_copy_32 (gcontext : ppcre2_general_context_32) :
-  ppcre2_general_context_32; cdecl; external PCRE2Lib;
 function pcre2_general_context_create_8 (private_malloc :
   private_malloc_callback; private_free : private_free_callback; memory_data :
   Pointer) : ppcre2_general_context_8; cdecl; external PCRE2Lib;
-function pcre2_general_context_create_16 (private_malloc :
-  private_malloc_callback; private_free : private_free_callback; memory_data :
-  Pointer) : ppcre2_general_context_16; cdecl; external PCRE2Lib;
-function pcre2_general_context_create_32 (private_malloc :
-  private_malloc_callback; private_free : private_free_callback; memory_data :
-  Pointer) : ppcre2_general_context_32; cdecl; external PCRE2Lib;
 procedure pcre2_general_context_free_8 (gcontext : ppcre2_general_context_8);
-  cdecl; external PCRE2Lib;
-procedure pcre2_general_context_free_16 (gcontext : ppcre2_general_context_16);
-  cdecl; external PCRE2Lib;
-procedure pcre2_general_context_free_32 (gcontext : ppcre2_general_context_32);
   cdecl; external PCRE2Lib;
 function pcre2_compile_context_copy_8 (ccontext : ppcre2_compile_context_8) :
   ppcre2_compile_context_8; cdecl; external PCRE2Lib;
-function pcre2_compile_context_copy_16 (ccontext : ppcre2_compile_context_16) :
-  ppcre2_compile_context_16; cdecl; external PCRE2Lib;
-function pcre2_compile_context_copy_32 (ccontext : ppcre2_compile_context_32) :
-  ppcre2_compile_context_32; cdecl; external PCRE2Lib;
 function pcre2_compile_context_create_8 (gcontext : ppcre2_general_context_8) :
   ppcre2_compile_context_8; cdecl; external PCRE2Lib;
-function pcre2_compile_context_create_16 (gcontext : ppcre2_general_context_16)
-  : ppcre2_compile_context_16; cdecl; external PCRE2Lib;
-function pcre2_compile_context_create_32 (gcontext : ppcre2_general_context_32)
-  : ppcre2_compile_context_32; cdecl; external PCRE2Lib;
 procedure pcre2_compile_context_free_8 (ccontext : ppcre2_compile_context_8);
-  cdecl; external PCRE2Lib;
-procedure pcre2_compile_context_free_16 (ccontext : ppcre2_compile_context_16);
-  cdecl; external PCRE2Lib;
-procedure pcre2_compile_context_free_32 (ccontext : ppcre2_compile_context_32);
   cdecl; external PCRE2Lib;
 function pcre2_set_bsr_8 (ccontext : ppcre2_compile_context_8; value : Cardinal)
   : Integer; cdecl; external PCRE2Lib;
-function pcre2_set_bsr_16 (ccontext : ppcre2_compile_context_16; value :
-  Cardinal) : Integer; cdecl; external PCRE2Lib;
-function pcre2_set_bsr_32 (ccontext : ppcre2_compile_context_32; value :
-  Cardinal) : Integer; cdecl; external PCRE2Lib;
 function pcre2_set_character_tables_8 (ccontext : ppcre2_compile_context_8;
-  const tables : PByte) : Integer; cdecl; external PCRE2Lib;
-function pcre2_set_character_tables_16 (ccontext : ppcre2_compile_context_16;
-  const tables : PByte) : Integer; cdecl; external PCRE2Lib;
-function pcre2_set_character_tables_32 (ccontext : ppcre2_compile_context_32;
   const tables : PByte) : Integer; cdecl; external PCRE2Lib;
 function pcre2_set_compile_extra_options_8 (ccontext : ppcre2_compile_context_8;
   extra_options : Cardinal) : Integer; cdecl; external PCRE2Lib;
-function pcre2_set_compile_extra_options_16 (ccontext :
-  ppcre2_compile_context_16; extra_options : Cardinal) : Integer; cdecl;
-  external PCRE2Lib;
-function pcre2_set_compile_extra_options_32 (ccontext :
-  ppcre2_compile_context_32; extra_options : Cardinal) : Integer; cdecl;
-  external PCRE2Lib;
 function pcre2_set_max_pattern_length_8 (ccontext : ppcre2_compile_context_8;
-  value : PCRE2_SIZE) : Integer; cdecl; external PCRE2Lib;
-function pcre2_set_max_pattern_length_16 (ccontext : ppcre2_compile_context_16;
-  value : PCRE2_SIZE) : Integer; cdecl; external PCRE2Lib;
-function pcre2_set_max_pattern_length_32 (ccontext : ppcre2_compile_context_32;
   value : PCRE2_SIZE) : Integer; cdecl; external PCRE2Lib;
 function pcre2_set_newline_8 (ccontext : ppcre2_compile_context_8; value :
   Cardinal) : Integer; cdecl; external PCRE2Lib;
-function pcre2_set_newline_16 (ccontext : ppcre2_compile_context_16; value :
-  Cardinal) : Integer; cdecl; external PCRE2Lib;
-function pcre2_set_newline_32 (ccontext : ppcre2_compile_context_32; value :
-  Cardinal) : Integer; cdecl; external PCRE2Lib;
 function pcre2_set_parens_nest_limit_8 (ccontext : ppcre2_compile_context_8;
-  value : Cardinal) : Integer; cdecl; external PCRE2Lib;
-function pcre2_set_parens_nest_limit_16 (ccontext : ppcre2_compile_context_16;
-  value : Cardinal) : Integer; cdecl; external PCRE2Lib;
-function pcre2_set_parens_nest_limit_32 (ccontext : ppcre2_compile_context_32;
   value : Cardinal) : Integer; cdecl; external PCRE2Lib;
 function pcre2_set_compile_recursion_guard_8 (ccontext :
   ppcre2_compile_context_8; guard_function : guard_function_callback;
   user_data : Pointer) : Integer; cdecl; external PCRE2Lib;
+{$ENDIF}
+{$IFDEF PCRE16}
+function pcre2_general_context_copy_16 (gcontext : ppcre2_general_context_16) :
+  ppcre2_general_context_16; cdecl; external PCRE2Lib;
+function pcre2_general_context_create_16 (private_malloc :
+  private_malloc_callback; private_free : private_free_callback; memory_data :
+  Pointer) : ppcre2_general_context_16; cdecl; external PCRE2Lib;
+procedure pcre2_general_context_free_16 (gcontext : ppcre2_general_context_16);
+  cdecl; external PCRE2Lib;
+function pcre2_compile_context_copy_16 (ccontext : ppcre2_compile_context_16) :
+  ppcre2_compile_context_16; cdecl; external PCRE2Lib;
+function pcre2_compile_context_create_16 (gcontext : ppcre2_general_context_16)
+  : ppcre2_compile_context_16; cdecl; external PCRE2Lib;
+procedure pcre2_compile_context_free_16 (ccontext : ppcre2_compile_context_16);
+  cdecl; external PCRE2Lib;
+function pcre2_set_bsr_16 (ccontext : ppcre2_compile_context_16; value :
+  Cardinal) : Integer; cdecl; external PCRE2Lib;
+function pcre2_set_character_tables_16 (ccontext : ppcre2_compile_context_16;
+  const tables : PByte) : Integer; cdecl; external PCRE2Lib;
+function pcre2_set_compile_extra_options_16 (ccontext :
+  ppcre2_compile_context_16; extra_options : Cardinal) : Integer; cdecl;
+  external PCRE2Lib;
+function pcre2_set_max_pattern_length_16 (ccontext : ppcre2_compile_context_16;
+  value : PCRE2_SIZE) : Integer; cdecl; external PCRE2Lib;
+function pcre2_set_newline_16 (ccontext : ppcre2_compile_context_16; value :
+  Cardinal) : Integer; cdecl; external PCRE2Lib;
+function pcre2_set_parens_nest_limit_16 (ccontext : ppcre2_compile_context_16;
+  value : Cardinal) : Integer; cdecl; external PCRE2Lib;
 function pcre2_set_compile_recursion_guard_16 (ccontext :
   ppcre2_compile_context_16; guard_function : guard_function_callback;
   user_data : Pointer) : Integer; cdecl; external PCRE2Lib;
+{$ENDIF}
+{$IFDEF PCRE32}
+function pcre2_general_context_copy_32 (gcontext : ppcre2_general_context_32) :
+  ppcre2_general_context_32; cdecl; external PCRE2Lib;
+function pcre2_general_context_create_32 (private_malloc :
+  private_malloc_callback; private_free : private_free_callback; memory_data :
+  Pointer) : ppcre2_general_context_32; cdecl; external PCRE2Lib;
+procedure pcre2_general_context_free_32 (gcontext : ppcre2_general_context_32);
+  cdecl; external PCRE2Lib;
+function pcre2_compile_context_copy_32 (ccontext : ppcre2_compile_context_32) :
+  ppcre2_compile_context_32; cdecl; external PCRE2Lib;
+function pcre2_compile_context_create_32 (gcontext : ppcre2_general_context_32)
+  : ppcre2_compile_context_32; cdecl; external PCRE2Lib;
+procedure pcre2_compile_context_free_32 (ccontext : ppcre2_compile_context_32);
+  cdecl; external PCRE2Lib;
+function pcre2_set_bsr_32 (ccontext : ppcre2_compile_context_32; value :
+  Cardinal) : Integer; cdecl; external PCRE2Lib;
+function pcre2_set_character_tables_32 (ccontext : ppcre2_compile_context_32;
+  const tables : PByte) : Integer; cdecl; external PCRE2Lib;
+function pcre2_set_compile_extra_options_32 (ccontext :
+  ppcre2_compile_context_32; extra_options : Cardinal) : Integer; cdecl;
+  external PCRE2Lib;
+function pcre2_set_max_pattern_length_32 (ccontext : ppcre2_compile_context_32;
+  value : PCRE2_SIZE) : Integer; cdecl; external PCRE2Lib;
+function pcre2_set_newline_32 (ccontext : ppcre2_compile_context_32; value :
+  Cardinal) : Integer; cdecl; external PCRE2Lib;
+function pcre2_set_parens_nest_limit_32 (ccontext : ppcre2_compile_context_32;
+  value : Cardinal) : Integer; cdecl; external PCRE2Lib;
 function pcre2_set_compile_recursion_guard_32 (ccontext :
   ppcre2_compile_context_32; guard_function : guard_function_callback;
   user_data : Pointer) : Integer; cdecl; external PCRE2Lib;
+{$ENDIF}
 
+{$IFDEF PCRE8}
 function pcre2_match_context_copy_8 (mcontext : ppcre2_match_context_8) :
   ppcre2_match_context_8; cdecl; external PCRE2Lib;
-function pcre2_match_context_copy_16 (mcontext : ppcre2_match_context_16) :
-  ppcre2_match_context_16; cdecl; external PCRE2Lib;
-function pcre2_match_context_copy_32 (mcontext : ppcre2_match_context_32) :
-  ppcre2_match_context_32; cdecl; external PCRE2Lib;
 function pcre2_match_context_create_8 (gcontext : ppcre2_general_context_8) :
   ppcre2_match_context_8; cdecl; external PCRE2Lib;
-function pcre2_match_context_create_16 (gcontext : ppcre2_general_context_16) :
-  ppcre2_match_context_16; cdecl; external PCRE2Lib;
-function pcre2_match_context_create_32 (gcontext : ppcre2_general_context_32) :
-  ppcre2_match_context_32; cdecl; external PCRE2Lib;
 procedure pcre2_match_context_free_8 (mcontext : ppcre2_match_context_8); cdecl;
   external PCRE2Lib;
-procedure pcre2_match_context_free_16 (mcontext : ppcre2_match_context_16);
-  cdecl; external PCRE2Lib;
-procedure pcre2_match_context_free_32 (mcontext : ppcre2_match_context_32);
-  cdecl; external PCRE2Lib;
 function pcre2_set_callout_8 (mcontext : ppcre2_match_context_8;
   callout_function : callout_function_callback_8; callout_data : Pointer) :
   Integer; cdecl; external PCRE2Lib;
-function pcre2_set_callout_16 (mcontext : ppcre2_match_context_16;
-  callout_function : callout_function_callback_16; callout_data : Pointer) :
-  Integer; cdecl; external PCRE2Lib;
-function pcre2_set_callout_32 (mcontext : ppcre2_match_context_32;
-  callout_function : callout_function_callback_32; callout_data : Pointer) :
-  Integer; cdecl; external PCRE2Lib;
 function pcre2_set_depth_limit_8 (mcontext : ppcre2_match_context_8; value :
-  Cardinal) : Integer; cdecl; external PCRE2Lib;
-function pcre2_set_depth_limit_16 (mcontext : ppcre2_match_context_16; value :
-  Cardinal) : Integer; cdecl; external PCRE2Lib;
-function pcre2_set_depth_limit_32 (mcontext : ppcre2_match_context_32; value :
   Cardinal) : Integer; cdecl; external PCRE2Lib;
 function pcre2_set_heap_limit_8 (mcontext : ppcre2_match_context_8; value :
   Cardinal) : Integer; cdecl; external PCRE2Lib;
-function pcre2_set_heap_limit_16 (mcontext : ppcre2_match_context_16; value :
-  Cardinal) : Integer; cdecl; external PCRE2Lib;
-function pcre2_set_heap_limit_32 (mcontext : ppcre2_match_context_32; value :
-  Cardinal) : Integer; cdecl; external PCRE2Lib;
 function pcre2_set_match_limit_8 (mcontext : ppcre2_match_context_8; value :
-  Cardinal) : Integer; cdecl; external PCRE2Lib;
-function pcre2_set_match_limit_16 (mcontext : ppcre2_match_context_16; value :
-  Cardinal) : Integer; cdecl; external PCRE2Lib;
-function pcre2_set_match_limit_32 (mcontext : ppcre2_match_context_32; value :
   Cardinal) : Integer; cdecl; external PCRE2Lib;
 function pcre2_set_offset_limit_8 (mcontext : ppcre2_match_context_8; value :
   PCRE2_SIZE) : Integer; cdecl; external PCRE2Lib;
-function pcre2_set_offset_limit_16 (mcontext : ppcre2_match_context_16; value :
-  PCRE2_SIZE) : Integer; cdecl; external PCRE2Lib;
-function pcre2_set_offset_limit_32 (mcontext : ppcre2_match_context_32; value :
-  PCRE2_SIZE) : Integer; cdecl; external PCRE2Lib;
 function pcre2_set_recursion_limit_8 (mcontext : ppcre2_match_context_8; value :
   Cardinal) : Integer; cdecl; external PCRE2Lib;
-function pcre2_set_recursion_limit_16 (mcontext : ppcre2_match_context_16;
-  value : Cardinal) : Integer; cdecl; external PCRE2Lib;
-function pcre2_set_recursion_limit_32 (mcontext : ppcre2_match_context_32;
-  value : Cardinal) : Integer; cdecl; external PCRE2Lib;
 function pcre2_set_recursion_memory_management_8 (mcontext :
   ppcre2_match_context_8; private_malloc : private_malloc_callback;
   private_free : private_free_callback; memory_data : Pointer) : Integer; cdecl;
   external PCRE2Lib;
+{$ENDIF}
+{$IFDEF PCRE16}
+function pcre2_match_context_copy_16 (mcontext : ppcre2_match_context_16) :
+  ppcre2_match_context_16; cdecl; external PCRE2Lib;
+function pcre2_match_context_create_16 (gcontext : ppcre2_general_context_16) :
+  ppcre2_match_context_16; cdecl; external PCRE2Lib;
+procedure pcre2_match_context_free_16 (mcontext : ppcre2_match_context_16);
+  cdecl; external PCRE2Lib;
+function pcre2_set_callout_16 (mcontext : ppcre2_match_context_16;
+  callout_function : callout_function_callback_16; callout_data : Pointer) :
+  Integer; cdecl; external PCRE2Lib;
+function pcre2_set_depth_limit_16 (mcontext : ppcre2_match_context_16; value :
+  Cardinal) : Integer; cdecl; external PCRE2Lib;
+function pcre2_set_heap_limit_16 (mcontext : ppcre2_match_context_16; value :
+  Cardinal) : Integer; cdecl; external PCRE2Lib;
+function pcre2_set_match_limit_16 (mcontext : ppcre2_match_context_16; value :
+  Cardinal) : Integer; cdecl; external PCRE2Lib;
+function pcre2_set_offset_limit_16 (mcontext : ppcre2_match_context_16; value :
+  PCRE2_SIZE) : Integer; cdecl; external PCRE2Lib;
+function pcre2_set_recursion_limit_16 (mcontext : ppcre2_match_context_16;
+  value : Cardinal) : Integer; cdecl; external PCRE2Lib;
 function pcre2_set_recursion_memory_management_16 (mcontext :
   ppcre2_match_context_16; private_malloc : private_malloc_callback;
   private_free : private_free_callback; memory_data : Pointer) : Integer; cdecl;
   external PCRE2Lib;
+{$ENDIF}
+{$IFDEF PCRE32}
+function pcre2_match_context_copy_32 (mcontext : ppcre2_match_context_32) :
+  ppcre2_match_context_32; cdecl; external PCRE2Lib;
+function pcre2_match_context_create_32 (gcontext : ppcre2_general_context_32) :
+  ppcre2_match_context_32; cdecl; external PCRE2Lib;
+procedure pcre2_match_context_free_32 (mcontext : ppcre2_match_context_32);
+  cdecl; external PCRE2Lib;
+function pcre2_set_callout_32 (mcontext : ppcre2_match_context_32;
+  callout_function : callout_function_callback_32; callout_data : Pointer) :
+  Integer; cdecl; external PCRE2Lib;
+function pcre2_set_depth_limit_32 (mcontext : ppcre2_match_context_32; value :
+  Cardinal) : Integer; cdecl; external PCRE2Lib;
+function pcre2_set_heap_limit_32 (mcontext : ppcre2_match_context_32; value :
+  Cardinal) : Integer; cdecl; external PCRE2Lib;
+function pcre2_set_match_limit_32 (mcontext : ppcre2_match_context_32; value :
+  Cardinal) : Integer; cdecl; external PCRE2Lib;
+function pcre2_set_offset_limit_32 (mcontext : ppcre2_match_context_32; value :
+  PCRE2_SIZE) : Integer; cdecl; external PCRE2Lib;
+function pcre2_set_recursion_limit_32 (mcontext : ppcre2_match_context_32;
+  value : Cardinal) : Integer; cdecl; external PCRE2Lib;
 function pcre2_set_recursion_memory_management_32 (mcontext :
   ppcre2_match_context_32; private_malloc : private_malloc_callback;
   private_free : private_free_callback; memory_data : Pointer) : Integer; cdecl;
   external PCRE2Lib;
+{$ENDIF}
 
+{$IFDEF PCRE8}
 function pcre2_convert_context_copy_8 (cvcontext : ppcre2_convert_context_8) :
   ppcre2_convert_context_8; cdecl; external PCRE2Lib;
-function pcre2_convert_context_copy_16 (cvcontext : ppcre2_convert_context_16) :
-  ppcre2_convert_context_16; cdecl; external PCRE2Lib;
-function pcre2_convert_context_copy_32 (cvcontext : ppcre2_convert_context_32) :
-  ppcre2_convert_context_32; cdecl; external PCRE2Lib;
 function pcre2_convert_context_create_8 (gcontext : ppcre2_general_context_8) :
   ppcre2_convert_context_8; cdecl; external PCRE2Lib;
-function pcre2_convert_context_create_16 (gcontext : ppcre2_general_context_16)
-  : ppcre2_convert_context_16; cdecl; external PCRE2Lib;
-function pcre2_convert_context_create_32 (gcontext : ppcre2_general_context_32)
-  : ppcre2_convert_context_32; cdecl; external PCRE2Lib;
 procedure pcre2_convert_context_free_8 (cvcontext : ppcre2_convert_context_8);
-  cdecl; external PCRE2Lib;
-procedure pcre2_convert_context_free_16 (cvcontext : ppcre2_convert_context_16);
-  cdecl; external PCRE2Lib;
-procedure pcre2_convert_context_free_32 (cvcontext : ppcre2_convert_context_32);
   cdecl; external PCRE2Lib;
 function pcre2_set_glob_escape_8 (cvcontext : ppcre2_convert_context_8;
   escape_char : Cardinal) : Integer; cdecl; external PCRE2Lib;
-function pcre2_set_glob_escape_16 (cvcontext : ppcre2_convert_context_16;
-  escape_char : Cardinal) : Integer; cdecl; external PCRE2Lib;
-function pcre2_set_glob_escape_32 (cvcontext : ppcre2_convert_context_32;
-  escape_char : Cardinal) : Integer; cdecl; external PCRE2Lib;
 function pcre2_set_glob_separator_8 (cvcontext : ppcre2_convert_context_8;
   separator_char : Cardinal) : Integer; cdecl; external PCRE2Lib;
+{$ENDIF}
+{$IFDEF PCRE16}
+function pcre2_convert_context_copy_16 (cvcontext : ppcre2_convert_context_16) :
+  ppcre2_convert_context_16; cdecl; external PCRE2Lib;
+function pcre2_convert_context_create_16 (gcontext : ppcre2_general_context_16)
+  : ppcre2_convert_context_16; cdecl; external PCRE2Lib;
+procedure pcre2_convert_context_free_16 (cvcontext : ppcre2_convert_context_16);
+  cdecl; external PCRE2Lib;
+function pcre2_set_glob_escape_16 (cvcontext : ppcre2_convert_context_16;
+  escape_char : Cardinal) : Integer; cdecl; external PCRE2Lib;
 function pcre2_set_glob_separator_16 (cvcontext : ppcre2_convert_context_16;
   separator_char : Cardinal) : Integer; cdecl; external PCRE2Lib;
+{$ENDIF}
+{$IFDEF PCRE32}
+function pcre2_convert_context_copy_32 (cvcontext : ppcre2_convert_context_32) :
+  ppcre2_convert_context_32; cdecl; external PCRE2Lib;
+function pcre2_convert_context_create_32 (gcontext : ppcre2_general_context_32)
+  : ppcre2_convert_context_32; cdecl; external PCRE2Lib;
+procedure pcre2_convert_context_free_32 (cvcontext : ppcre2_convert_context_32);
+  cdecl; external PCRE2Lib;
+function pcre2_set_glob_escape_32 (cvcontext : ppcre2_convert_context_32;
+  escape_char : Cardinal) : Integer; cdecl; external PCRE2Lib;
 function pcre2_set_glob_separator_32 (cvcontext : ppcre2_convert_context_32;
   separator_char : Cardinal) : Integer; cdecl; external PCRE2Lib;
+{$ENDIF}
 
 { Functions concerned with compiling a pattern to PCRE internal code. }
+{$IFDEF PCRE8}
 function pcre2_compile_8 (pattern : PCRE2_SPTR8; length : PCRE2_SIZE; options :
   Cardinal; errorcode : PInteger; erroroffset : PPCRE2_SIZE; ccontext :
   ppcre2_compile_context_8) : ppcre2_code_8; cdecl; external PCRE2Lib;
+procedure pcre2_code_free_8 (code : ppcre2_code_8); cdecl; external PCRE2Lib;
+function pcre2_code_copy_8 (const code : ppcre2_code_8) : ppcre2_code_8; cdecl;
+  external PCRE2Lib;
+function pcre2_code_copy_with_tables_8 (const code : ppcre2_code_8) :
+  ppcre2_code_8; cdecl; external PCRE2Lib;
+{$ENDIF}
+{$IFDEF PCRE16}
 function pcre2_compile_16 (pattern : PCRE2_SPTR16; length : PCRE2_SIZE; options
   : Cardinal; errorcode : PInteger; erroroffset : PPCRE2_SIZE; ccontext :
   ppcre2_compile_context_16) : ppcre2_code_16; cdecl; external PCRE2Lib;
+procedure pcre2_code_free_16 (code : ppcre2_code_16); cdecl; external PCRE2Lib;
+function pcre2_code_copy_16 (const code : ppcre2_code_16) : ppcre2_code_16;
+  cdecl; external PCRE2Lib;
+function pcre2_code_copy_with_tables_16 (const code : ppcre2_code_16) :
+  ppcre2_code_16; cdecl; external PCRE2Lib;
+{$ENDIF}
+{$IFDEF PCRE32}
 function pcre2_compile_32 (pattern : PCRE2_SPTR32; length : PCRE2_SIZE; options
   : Cardinal; errorcode : PInteger; erroroffset : PPCRE2_SIZE; ccontext :
   ppcre2_compile_context_32) : ppcre2_code_32; cdecl; external PCRE2Lib;
-procedure pcre2_code_free_8 (code : ppcre2_code_8); cdecl; external PCRE2Lib;
-procedure pcre2_code_free_16 (code : ppcre2_code_16); cdecl; external PCRE2Lib;
 procedure pcre2_code_free_32 (code : ppcre2_code_32); cdecl; external PCRE2Lib;
-function pcre2_code_copy_8 (const code : ppcre2_code_8) : ppcre2_code_8; cdecl;
-  external PCRE2Lib;
-function pcre2_code_copy_16 (const code : ppcre2_code_16) : ppcre2_code_16;
-  cdecl; external PCRE2Lib;
 function pcre2_code_copy_32 (const code : ppcre2_code_32) : ppcre2_code_32;
   cdecl; external PCRE2Lib;
-function pcre2_code_copy_with_tables_8 (const code : ppcre2_code_8) :
-  ppcre2_code_8; cdecl; external PCRE2Lib;
-function pcre2_code_copy_with_tables_16 (const code : ppcre2_code_16) :
-  ppcre2_code_16; cdecl; external PCRE2Lib;
+function pcre2_code_copy_with_tables_32 (const code : ppcre2_code_32) :
+  ppcre2_code_32; cdecl; external PCRE2Lib;
+{$ENDIF}
 
 { Functions that give information about a compiled pattern. }
+{$IFDEF PCRE8}
 function pcre2_pattern_info_8 (const code : ppcre2_code_8; what : Cardinal;
-  where : Pointer) : Integer; cdecl; external PCRE2Lib;
-function pcre2_pattern_info_16 (const code : ppcre2_code_16; what : Cardinal;
-  where : Pointer) : Integer; cdecl; external PCRE2Lib;
-function pcre2_pattern_info_32 (const code : ppcre2_code_32; what : Cardinal;
   where : Pointer) : Integer; cdecl; external PCRE2Lib;
 function pcre2_callout_enumerate_8 (const code : ppcre2_code_8; callback :
   pcre2_callout_enumerate_callback_8; callout_data : Pointer) : Integer; cdecl;
   external PCRE2Lib;
+{$ENDIF}
+{$IFDEF PCRE16}
+function pcre2_pattern_info_16 (const code : ppcre2_code_16; what : Cardinal;
+  where : Pointer) : Integer; cdecl; external PCRE2Lib;
 function pcre2_callout_enumerate_16 (const code : ppcre2_code_16; callback :
   pcre2_callout_enumerate_callback_16; callout_data : Pointer) : Integer; cdecl;
   external PCRE2Lib;
+{$ENDIF}
+{$IFDEF PCRE32}
+function pcre2_pattern_info_32 (const code : ppcre2_code_32; what : Cardinal;
+  where : Pointer) : Integer; cdecl; external PCRE2Lib;
 function pcre2_callout_enumerate_32 (const code : ppcre2_code_32; callback :
   pcre2_callout_enumerate_callback_32; callout_data : Pointer) : Integer; cdecl;
   external PCRE2Lib;
+{$ENDIF}
 
 { Functions for running a match and inspecting the result. }
+{$IFDEF PCRE8}
 function pcre2_match_data_create_8 (ovecsize : Cardinal; gcontext :
   ppcre2_general_context_8) : ppcre2_match_data_8; cdecl; external PCRE2Lib;
-function pcre2_match_data_create_16 (ovecsize : Cardinal; gcontext :
-  ppcre2_general_context_16) : ppcre2_match_data_16; cdecl; external PCRE2Lib;
-function pcre2_match_data_create_32 (ovecsize : Cardinal; gcontext :
-  ppcre2_general_context_32) : ppcre2_match_data_32; cdecl; external PCRE2Lib;
 function pcre2_match_data_create_from_pattern_8 (const code : ppcre2_code_8;
   gcontext : ppcre2_general_context_8) : ppcre2_match_data_8; cdecl;
-  external PCRE2Lib;
-function pcre2_match_data_create_from_pattern_16 (const code : ppcre2_code_16;
-  gcontext : ppcre2_general_context_16) : ppcre2_match_data_16; cdecl;
-  external PCRE2Lib;
-function pcre2_match_data_create_from_pattern_32 (const code : ppcre2_code_32;
-  gcontext : ppcre2_general_context_32) : ppcre2_match_data_32; cdecl;
   external PCRE2Lib;
 function pcre2_dfa_match_8 (const code : ppcre2_code_8; subject : PCRE2_SPTR8;
   length : PCRE2_SIZE; startoffset : PCRE2_SIZE; options : Cardinal;
   match_data : ppcre2_match_data_8; mcontext : ppcre2_match_context_8;
   workspace : PInteger; wscount : PCRE2_SIZE) : Integer; cdecl;
   external PCRE2Lib;
+function pcre2_match_8 (const code : ppcre2_code_8; subject : PCRE2_SPTR8;
+  length : PCRE2_SIZE; startoffset : PCRE2_SIZE; options : Cardinal;
+  match_data : ppcre2_match_data_8; mcontext : ppcre2_match_context_8) :
+  Integer; cdecl; external PCRE2Lib;
+function pcre2_get_match_data_size_8 (match_data : ppcre2_match_data_8) :
+  PCRE2_SIZE; cdecl; external PCRE2Lib;
+procedure pcre2_match_data_free_8 (match_data : ppcre2_match_data_8); cdecl;
+  external PCRE2Lib;
+function pcre2_get_mark_8 (match_data : ppcre2_match_data_8) : PCRE2_SPTR8;
+  cdecl; external PCRE2Lib;
+function pcre2_get_ovector_count_8 (match_data : ppcre2_match_data_8) :
+  Cardinal; cdecl; external PCRE2Lib;
+function pcre2_get_ovector_pointer_8 (match_data : ppcre2_match_data_8) :
+  PPCRE2_SIZE; cdecl; external PCRE2Lib;
+function pcre2_get_startchar_8 (match_data : ppcre2_match_data_8) : PCRE2_SIZE;
+  cdecl; external PCRE2Lib;
+{$ENDIF}
+{$IFDEF PCRE16}
+function pcre2_match_data_create_16 (ovecsize : Cardinal; gcontext :
+  ppcre2_general_context_16) : ppcre2_match_data_16; cdecl; external PCRE2Lib;
+function pcre2_match_data_create_from_pattern_16 (const code : ppcre2_code_16;
+  gcontext : ppcre2_general_context_16) : ppcre2_match_data_16; cdecl;
+  external PCRE2Lib;
 function pcre2_dfa_match_16 (const code : ppcre2_code_16; subject :
   PCRE2_SPTR16; length : PCRE2_SIZE; startoffset : PCRE2_SIZE; options :
   Cardinal; match_data : ppcre2_match_data_16; mcontext :
   ppcre2_match_context_16; workspace : PInteger; wscount : PCRE2_SIZE) :
   Integer; cdecl; external PCRE2Lib;
+function pcre2_match_16 (const code : ppcre2_code_16; subject : PCRE2_SPTR16;
+  length : PCRE2_SIZE; startoffset : PCRE2_SIZE; options : Cardinal;
+  match_data : ppcre2_match_data_16; mcontext : ppcre2_match_context_16) :
+  Integer; cdecl; external PCRE2Lib;
+function pcre2_get_match_data_size_16 (match_data : ppcre2_match_data_16) :
+  PCRE2_SIZE; cdecl; external PCRE2Lib;
+procedure pcre2_match_data_free_16 (match_data : ppcre2_match_data_16); cdecl;
+  external PCRE2Lib;
+function pcre2_get_mark_16 (match_data : ppcre2_match_data_16) : PCRE2_SPTR16;
+  cdecl; external PCRE2Lib;
+function pcre2_get_ovector_count_16 (match_data : ppcre2_match_data_16) :
+  Cardinal; cdecl; external PCRE2Lib;
+function pcre2_get_ovector_pointer_16 (match_data : ppcre2_match_data_16) :
+  PPCRE2_SIZE; cdecl; external PCRE2Lib;
+function pcre2_get_startchar_16 (match_data : ppcre2_match_data_16) :
+  PCRE2_SIZE; cdecl; external PCRE2Lib;
+{$ENDIF}
+{$IFDEF PCRE32}
+function pcre2_match_data_create_32 (ovecsize : Cardinal; gcontext :
+  ppcre2_general_context_32) : ppcre2_match_data_32; cdecl; external PCRE2Lib;
+function pcre2_match_data_create_from_pattern_32 (const code : ppcre2_code_32;
+  gcontext : ppcre2_general_context_32) : ppcre2_match_data_32; cdecl;
+  external PCRE2Lib;
 function pcre2_dfa_match_32 (const code : ppcre2_code_32; subject :
   PCRE2_SPTR32; length : PCRE2_SIZE; startoffset : PCRE2_SIZE; options :
   Cardinal; match_data : ppcre2_match_data_32; mcontext :
   ppcre2_match_context_32; workspace : PInteger; wscount : PCRE2_SIZE) :
   Integer; cdecl; external PCRE2Lib;
-function pcre2_match_8 (const code : ppcre2_code_8; subject : PCRE2_SPTR8;
-  length : PCRE2_SIZE; startoffset : PCRE2_SIZE; options : Cardinal;
-  match_data : ppcre2_match_data_8; mcontext : ppcre2_match_context_8) :
-  Integer; cdecl; external PCRE2Lib;
-function pcre2_match_16 (const code : ppcre2_code_16; subject : PCRE2_SPTR16;
-  length : PCRE2_SIZE; startoffset : PCRE2_SIZE; options : Cardinal;
-  match_data : ppcre2_match_data_16; mcontext : ppcre2_match_context_16) :
-  Integer; cdecl; external PCRE2Lib;
 function pcre2_match_32 (const code : ppcre2_code_32; subject : PCRE2_SPTR32;
   length : PCRE2_SIZE; startoffset : PCRE2_SIZE; options : Cardinal;
   match_data : ppcre2_match_data_32; mcontext : ppcre2_match_context_32) :
   Integer; cdecl; external PCRE2Lib;
-function pcre2_get_match_data_size_8 (match_data : ppcre2_match_data_8) :
-  PCRE2_SIZE; cdecl; external PCRE2Lib;
-function pcre2_get_match_data_size_16 (match_data : ppcre2_match_data_16) :
-  PCRE2_SIZE; cdecl; external PCRE2Lib;
 function pcre2_get_match_data_size_32 (match_data : ppcre2_match_data_32) :
   PCRE2_SIZE; cdecl; external PCRE2Lib;
-procedure pcre2_match_data_free_8 (match_data : ppcre2_match_data_8); cdecl;
-  external PCRE2Lib;
-procedure pcre2_match_data_free_16 (match_data : ppcre2_match_data_16); cdecl;
-  external PCRE2Lib;
 procedure pcre2_match_data_free_32 (match_data : ppcre2_match_data_32); cdecl;
   external PCRE2Lib;
-function pcre2_get_mark_8 (match_data : ppcre2_match_data_8) : PCRE2_SPTR8;
-  cdecl; external PCRE2Lib;
-function pcre2_get_mark_16 (match_data : ppcre2_match_data_16) : PCRE2_SPTR16;
-  cdecl; external PCRE2Lib;
 function pcre2_get_mark_32 (match_data : ppcre2_match_data_32) : PCRE2_SPTR32;
   cdecl; external PCRE2Lib;
-function pcre2_get_ovector_count_8 (match_data : ppcre2_match_data_8) :
-  Cardinal; cdecl; external PCRE2Lib;
-function pcre2_get_ovector_count_16 (match_data : ppcre2_match_data_16) :
-  Cardinal; cdecl; external PCRE2Lib;
 function pcre2_get_ovector_count_32 (match_data : ppcre2_match_data_32) :
   Cardinal; cdecl; external PCRE2Lib;
-function pcre2_get_ovector_pointer_8 (match_data : ppcre2_match_data_8) :
-  PPCRE2_SIZE; cdecl; external PCRE2Lib;
-function pcre2_get_ovector_pointer_16 (match_data : ppcre2_match_data_16) :
-  PPCRE2_SIZE; cdecl; external PCRE2Lib;
 function pcre2_get_ovector_pointer_32 (match_data : ppcre2_match_data_32) :
   PPCRE2_SIZE; cdecl; external PCRE2Lib;
-function pcre2_get_startchar_8 (match_data : ppcre2_match_data_8) : PCRE2_SIZE;
-  cdecl; external PCRE2Lib;
-function pcre2_get_startchar_16 (match_data : ppcre2_match_data_16) :
-  PCRE2_SIZE; cdecl; external PCRE2Lib;
 function pcre2_get_startchar_32 (match_data : ppcre2_match_data_32) :
   PCRE2_SIZE; cdecl; external PCRE2Lib;
+{$ENDIF}
 
 { Convenience functions for handling matched substrings. }
+{$IFDEF PCRE8}
 function pcre2_substring_copy_byname_8 (match_data : ppcre2_match_data_8; name :
   PCRE2_SPTR8; buffer : PPCRE2_UCHAR8; bufflen : PPCRE2_SIZE) : Integer; cdecl;
   external PCRE2Lib;
-function pcre2_substring_copy_byname_16 (match_data : ppcre2_match_data_16;
-  name : PCRE2_SPTR16; buffer : PPCRE2_UCHAR16; bufflen : PPCRE2_SIZE) :
-  Integer; cdecl; external PCRE2Lib;
-function pcre2_substring_copy_byname_32 (match_data : ppcre2_match_data_32;
-  name : PCRE2_SPTR32; buffer : PPCRE2_UCHAR32; bufflen : PPCRE2_SIZE) :
-  Integer; cdecl; external PCRE2Lib;
 function pcre2_substring_copy_bynumber_8 (match_data : ppcre2_match_data_8;
   number : Cardinal; buffer : PPCRE2_UCHAR8; bufflen : PPCRE2_SIZE) : Integer;
   cdecl; external PCRE2Lib;
-function pcre2_substring_copy_bynumber_16 (match_data : ppcre2_match_data_16;
-  number : Cardinal; buffer : PPCRE2_UCHAR16; bufflen : PPCRE2_SIZE) : Integer;
-  cdecl; external PCRE2Lib;
-function pcre2_substring_copy_bynumber_32 (match_data : ppcre2_match_data_32;
-  number : Cardinal; buffer : PPCRE2_UCHAR32; bufflen : PPCRE2_SIZE) : Integer;
-  cdecl; external PCRE2Lib;
 procedure pcre2_substring_free_8 (buffer : PPCRE2_UCHAR8); cdecl;
-  external PCRE2Lib;
-procedure pcre2_substring_free_16 (buffer : PPCRE2_UCHAR16); cdecl;
-  external PCRE2Lib;
-procedure pcre2_substring_free_32 (buffer : PPCRE2_UCHAR32); cdecl;
   external PCRE2Lib;
 function pcre2_substring_get_byname_8 (match_data : ppcre2_match_data_8; name :
   PCRE2_SPTR8; bufferptr : PPPCRE2_UCHAR8; bufflen : PPCRE2_SIZE) : Integer;
@@ -1145,182 +1174,251 @@ function pcre2_substring_get_byname_8 (match_data : ppcre2_match_data_8; name :
 function pcre2_substring_get_bynumber_8 (match_data : ppcre2_match_data_8;
   number : Cardinal; bufferptr : PPPCRE2_UCHAR8; bufflen : PPCRE2_SIZE) :
   Integer; cdecl; external PCRE2Lib;
-function pcre2_substring_get_bynumber_16 (match_data : ppcre2_match_data_16;
-  number : Cardinal; bufferptr : PPPCRE2_UCHAR16; bufflen : PPCRE2_SIZE) :
-  Integer; cdecl; external PCRE2Lib;
-function pcre2_substring_get_bynumber_32 (match_data : ppcre2_match_data_32;
-  number : Cardinal; bufferptr : PPPCRE2_UCHAR32; bufflen : PPCRE2_SIZE) :
-  Integer; cdecl; external PCRE2Lib;
 function pcre2_substring_length_byname_8 (match_data : ppcre2_match_data_8;
   name : PCRE2_SPTR8; length : PPCRE2_SIZE) : Integer; cdecl; external PCRE2Lib;
-function pcre2_substring_length_byname_16 (match_data : ppcre2_match_data_16;
-  name : PCRE2_SPTR16; length : PPCRE2_SIZE) : Integer; cdecl;
-  external PCRE2Lib;
-function pcre2_substring_length_byname_32 (match_data : ppcre2_match_data_32;
-  name : PCRE2_SPTR32; length : PPCRE2_SIZE) : Integer; cdecl;
-  external PCRE2Lib;
 function pcre2_substring_length_bynumber_8 (match_data : ppcre2_match_data_8;
-  number : Cardinal; length : PPCRE2_SIZE) : Integer; cdecl; external PCRE2Lib;
-function pcre2_substring_length_bynumber_16 (match_data : ppcre2_match_data_16;
-  number : Cardinal; length : PPCRE2_SIZE) : Integer; cdecl; external PCRE2Lib;
-function pcre2_substring_length_bynumber_32 (match_data : ppcre2_match_data_32;
   number : Cardinal; length : PPCRE2_SIZE) : Integer; cdecl; external PCRE2Lib;
 function pcre2_substring_nametable_scan_8 (const code : ppcre2_code_8; name :
   PCRE2_SPTR8; first : PPCRE2_SPTR8; last : PPCRE2_SPTR8) : Integer; cdecl;
   external PCRE2Lib;
 function pcre2_substring_number_from_name_8 (const code : ppcre2_code_8; name :
   PCRE2_SPTR8) : Integer; cdecl; external PCRE2Lib;
-function pcre2_substring_number_from_name_16 (const code : ppcre2_code_16;
-  name : PCRE2_SPTR16) : Integer; cdecl; external PCRE2Lib;
-function pcre2_substring_number_from_name_32 (const code : ppcre2_code_32;
-  name : PCRE2_SPTR32) : Integer; cdecl; external PCRE2Lib;
 procedure pcre2_substring_list_free_8 (list : PPCRE2_SPTR8); cdecl;
-  external PCRE2Lib;
-procedure pcre2_substring_list_free_16 (list : PPCRE2_SPTR16); cdecl;
-  external PCRE2Lib;
-procedure pcre2_substring_list_free_32 (list : PPCRE2_SPTR32); cdecl;
   external PCRE2Lib;
 function pcre2_substring_list_get_8 (match_data : ppcre2_match_data_8; listptr :
   PPPPCRE2_UCHAR8; lengthsptr : PPPCRE2_SIZE) : Integer; cdecl;
   external PCRE2Lib;
+{$ENDIF}
+{$IFDEF PCRE16}
+function pcre2_substring_copy_byname_16 (match_data : ppcre2_match_data_16;
+  name : PCRE2_SPTR16; buffer : PPCRE2_UCHAR16; bufflen : PPCRE2_SIZE) :
+  Integer; cdecl; external PCRE2Lib;
+function pcre2_substring_copy_bynumber_16 (match_data : ppcre2_match_data_16;
+  number : Cardinal; buffer : PPCRE2_UCHAR16; bufflen : PPCRE2_SIZE) : Integer;
+  cdecl; external PCRE2Lib;
+procedure pcre2_substring_free_16 (buffer : PPCRE2_UCHAR16); cdecl;
+  external PCRE2Lib;
+function pcre2_substring_get_byname_16 (match_data : ppcre2_match_data_16; name
+  : PCRE2_SPTR16; bufferptr : PPPCRE2_UCHAR16; bufflen : PPCRE2_SIZE) : Integer;
+  cdecl; external PCRE2Lib;
+function pcre2_substring_get_bynumber_16 (match_data : ppcre2_match_data_16;
+  number : Cardinal; bufferptr : PPPCRE2_UCHAR16; bufflen : PPCRE2_SIZE) :
+  Integer; cdecl; external PCRE2Lib;
+function pcre2_substring_length_byname_16 (match_data : ppcre2_match_data_16;
+  name : PCRE2_SPTR16; length : PPCRE2_SIZE) : Integer; cdecl;
+  external PCRE2Lib;
+function pcre2_substring_length_bynumber_16 (match_data : ppcre2_match_data_16;
+  number : Cardinal; length : PPCRE2_SIZE) : Integer; cdecl; external PCRE2Lib;
+function pcre2_substring_nametable_scan_16 (const code : ppcre2_code_16; name :
+  PCRE2_SPTR16; first : PPCRE2_SPTR16; last : PPCRE2_SPTR16) : Integer; cdecl;
+  external PCRE2Lib;
+function pcre2_substring_number_from_name_16 (const code : ppcre2_code_16;
+  name : PCRE2_SPTR16) : Integer; cdecl; external PCRE2Lib;
+procedure pcre2_substring_list_free_16 (list : PPCRE2_SPTR16); cdecl;
+  external PCRE2Lib;
+function pcre2_substring_list_get_16 (match_data : ppcre2_match_data_16; listptr
+  : PPPPCRE2_UCHAR16; lengthsptr : PPPCRE2_SIZE) : Integer; cdecl;
+  external PCRE2Lib;
+{$ENDIF}
+{$IFDEF PCRE32}
+function pcre2_substring_copy_byname_32 (match_data : ppcre2_match_data_32;
+  name : PCRE2_SPTR32; buffer : PPCRE2_UCHAR32; bufflen : PPCRE2_SIZE) :
+  Integer; cdecl; external PCRE2Lib;
+function pcre2_substring_copy_bynumber_32 (match_data : ppcre2_match_data_32;
+  number : Cardinal; buffer : PPCRE2_UCHAR32; bufflen : PPCRE2_SIZE) : Integer;
+  cdecl; external PCRE2Lib;
+procedure pcre2_substring_free_32 (buffer : PPCRE2_UCHAR32); cdecl;
+  external PCRE2Lib;
+function pcre2_substring_get_byname_32 (match_data : ppcre2_match_data_32; name
+  : PCRE2_SPTR32; bufferptr : PPPCRE2_UCHAR32; bufflen : PPCRE2_SIZE) : Integer;
+  cdecl; external PCRE2Lib;
+function pcre2_substring_get_bynumber_32 (match_data : ppcre2_match_data_32;
+  number : Cardinal; bufferptr : PPPCRE2_UCHAR32; bufflen : PPCRE2_SIZE) :
+  Integer; cdecl; external PCRE2Lib;
+function pcre2_substring_length_byname_32 (match_data : ppcre2_match_data_32;
+  name : PCRE2_SPTR32; length : PPCRE2_SIZE) : Integer; cdecl;
+  external PCRE2Lib;
+function pcre2_substring_length_bynumber_32 (match_data : ppcre2_match_data_32;
+  number : Cardinal; length : PPCRE2_SIZE) : Integer; cdecl; external PCRE2Lib;
+function pcre2_substring_nametable_scan_32 (const code : ppcre2_code_32; name :
+  PCRE2_SPTR32; first : PPCRE2_SPTR32; last : PPCRE2_SPTR32) : Integer; cdecl;
+  external PCRE2Lib;
+function pcre2_substring_number_from_name_32 (const code : ppcre2_code_32;
+  name : PCRE2_SPTR32) : Integer; cdecl; external PCRE2Lib;
+procedure pcre2_substring_list_free_32 (list : PPCRE2_SPTR32); cdecl;
+  external PCRE2Lib;
+function pcre2_substring_list_get_32 (match_data : ppcre2_match_data_32; listptr
+  : PPPPCRE2_UCHAR32; lengthsptr : PPPCRE2_SIZE) : Integer; cdecl;
+  external PCRE2Lib;
+{$ENDIF}
 
 { Functions for serializing / deserializing compiled patterns. }
+{$IFDEF PCRE8}
 function pcre2_serialize_encode_8 (const codes : pppcre2_code_8;
   number_of_codes : Longint; serialized_bytes : PPByte; serialized_size :
   PPCRE2_SIZE; gcontext : ppcre2_general_context_8) : Longint; cdecl;
   external PCRE2Lib;
+function pcre2_serialize_decode_8 (codes : pppcre2_code_8; number_of_codes :
+  Longint; const bytes : PByte; gcontext : ppcre2_general_context_8) : Longint;
+  cdecl; external PCRE2Lib;
+function pcre2_serialize_get_number_of_codes_8 (const bytes : PByte) : Longint;
+  cdecl; external PCRE2Lib;
+procedure pcre2_serialize_free_8 (bytes : PByte); cdecl; external PCRE2Lib;
+{$ENDIF}
+{$IFDEF PCRE16}
 function pcre2_serialize_encode_16 (const codes : pppcre2_code_16;
   number_of_codes : Longint; serialized_bytes : PPByte; serialized_size :
   PPCRE2_SIZE; gcontext : ppcre2_general_context_16) : Longint; cdecl;
   external PCRE2Lib;
+function pcre2_serialize_decode_16 (codes : pppcre2_code_16; number_of_codes :
+  Longint; const bytes : PByte; gcontext : ppcre2_general_context_16) : Longint;
+  cdecl; external PCRE2Lib;
+function pcre2_serialize_get_number_of_codes_16 (const bytes : PByte) : Longint;
+  cdecl; external PCRE2Lib;
+procedure pcre2_serialize_free_16 (bytes : PByte); cdecl; external PCRE2Lib;
+{$ENDIF}
+{$IFDEF PCRE32}
 function pcre2_serialize_encode_32 (const codes : pppcre2_code_32;
   number_of_codes : Longint; serialized_bytes : PPByte; serialized_size :
   PPCRE2_SIZE; gcontext : ppcre2_general_context_32) : Longint; cdecl;
   external PCRE2Lib;
-function pcre2_serialize_decode_8 (codes : pppcre2_code_8; number_of_codes :
-  Longint; const bytes : PByte; gcontext : ppcre2_general_context_8) : Longint;
-  cdecl; external PCRE2Lib;
-function pcre2_serialize_decode_16 (codes : pppcre2_code_16; number_of_codes :
-  Longint; const bytes : PByte; gcontext : ppcre2_general_context_16) : Longint;
-  cdecl; external PCRE2Lib;
 function pcre2_serialize_decode_32 (codes : pppcre2_code_32; number_of_codes :
   Longint; const bytes : PByte; gcontext : ppcre2_general_context_32) : Longint;
   cdecl; external PCRE2Lib;
-function pcre2_serialize_get_number_of_codes_8 (const bytes : PByte) : Longint;
-  cdecl; external PCRE2Lib;
-function pcre2_serialize_get_number_of_codes_16 (const bytes : PByte) : Longint;
-  cdecl; external PCRE2Lib;
 function pcre2_serialize_get_number_of_codes_32 (const bytes : PByte) : Longint;
   cdecl; external PCRE2Lib;
-procedure pcre2_serialize_free_8 (bytes : PByte); cdecl; external PCRE2Lib;
-procedure pcre2_serialize_free_16 (bytes : PByte); cdecl; external PCRE2Lib;
 procedure pcre2_serialize_free_32 (bytes : PByte); cdecl; external PCRE2Lib;
+{$ENDIF}
 
 { Convenience function for match + substitute. }
+{$IFDEF PCRE8}
 function pcre2_substitute_8 (const code : ppcre2_code_8; subject : PCRE2_SPTR8;
   length : PCRE2_SIZE; startoffset : PCRE2_SIZE; options : Cardinal;
   match_data : ppcre2_match_data_8; mcontext : ppcre2_match_context_8;
   replacement : PCRE2_SPTR8; rlength : PCRE2_SIZE; outputbuffer : PPCRE2_UCHAR8;
   outlengthptr : PPCRE2_SIZE) : Integer; cdecl; external PCRE2Lib;
+{$ENDIF}
+{$IFDEF PCRE16}
 function pcre2_substitute_16 (const code : ppcre2_code_16; subject :
   PCRE2_SPTR16; length : PCRE2_SIZE; startoffset : PCRE2_SIZE; options :
   Cardinal; match_data : ppcre2_match_data_16; mcontext :
   ppcre2_match_context_16; replacement : PCRE2_SPTR16; rlength : PCRE2_SIZE;
   outputbuffer : PPCRE2_UCHAR16; outlengthptr : PPCRE2_SIZE) : Integer; cdecl;
   external PCRE2Lib;
+{$ENDIF}
+{$IFDEF PCRE32}
 function pcre2_substitute_32 (const code : ppcre2_code_32; subject :
   PCRE2_SPTR32; length : PCRE2_SIZE; startoffset : PCRE2_SIZE; options :
   Cardinal; match_data : ppcre2_match_data_32; mcontext :
   ppcre2_match_context_32; replacement : PCRE2_SPTR32; rlength : PCRE2_SIZE;
   outputbuffer : PPCRE2_UCHAR32; outlengthptr : PPCRE2_SIZE) : Integer; cdecl;
   external PCRE2Lib;
+{$ENDIF}
 
 { Functions for converting pattern source strings. }
+{$IFDEF PCRE8}
 function pcre2_pattern_convert_8 (pattern : PCRE2_SPTR8; length : PCRE2_SIZE;
   options : Cardinal; buffer : PPPCRE2_UCHAR8; blength : PPCRE2_SIZE;
   cvcontext : ppcre2_convert_context_8) : Integer; cdecl; external PCRE2Lib;
+procedure pcre2_converted_pattern_free_8 (converted_pattern : PPCRE2_UCHAR8);
+  cdecl; external PCRE2Lib;
+{$ENDIF}
+{$IFDEF PCRE16}
 function pcre2_pattern_convert_16 (pattern : PCRE2_SPTR16; length : PCRE2_SIZE;
   options : Cardinal; buffer : PPPCRE2_UCHAR16; blength : PPCRE2_SIZE;
   cvcontext : ppcre2_convert_context_16) : Integer; cdecl; external PCRE2Lib;
+procedure pcre2_converted_pattern_free_16 (converted_pattern : PPCRE2_UCHAR16);
+  cdecl; external PCRE2Lib;
+{$ENDIF}
+{$IFDEF PCRE32}
 function pcre2_pattern_convert_32 (pattern : PCRE2_SPTR32; length : PCRE2_SIZE;
   options : Cardinal; buffer : PPPCRE2_UCHAR32; blength : PPCRE2_SIZE;
   cvcontext : ppcre2_convert_context_32) : Integer; cdecl; external PCRE2Lib;
-procedure pcre2_converted_pattern_free_8 (converted_pattern : PPCRE2_UCHAR8);
-  cdecl; external PCRE2Lib;
-procedure pcre2_converted_pattern_free_16 (converted_pattern : PPCRE2_UCHAR16);
-  cdecl; external PCRE2Lib;
 procedure pcre2_converted_pattern_free_32 (converted_pattern : PPCRE2_UCHAR32);
   cdecl; external PCRE2Lib;
+{$ENDIF}
 
 { Functions for JIT processing }
+{$IFDEF PCRE8}
 function pcre2_jit_compile_8 (code : ppcre2_code_8; options : Cardinal) :
-  Integer; cdecl; external PCRE2Lib;
-function pcre2_jit_compile_16 (code : ppcre2_code_16; options : Cardinal) :
-  Integer; cdecl; external PCRE2Lib;
-function pcre2_jit_compile_32 (code : ppcre2_code_32; options : Cardinal) :
   Integer; cdecl; external PCRE2Lib;
 function pcre2_jit_match_8 (const code : ppcre2_code_8; subject : PCRE2_SPTR8;
   length : PCRE2_SIZE; startoffset : PCRE2_SIZE; options : Cardinal;
   match_data : ppcre2_match_data_8; mcontext : ppcre2_match_context_8) :
   Integer; cdecl; external PCRE2Lib;
+procedure pcre2_jit_free_unused_memory_8 (gcontext : ppcre2_general_context_8);
+  cdecl; external PCRE2Lib;
+function pcre2_jit_stack_create_8 (startsize : PCRE2_SIZE; maxsize : PCRE2_SIZE;
+  gcontext : ppcre2_general_context_8) : ppcre2_jit_stack_8; cdecl;
+  external PCRE2Lib;
+procedure pcre2_jit_stack_assign_8 (mcontext : ppcre2_match_context_8;
+  callback_function : pcre2_jit_callback_8; callback_data : Pointer); cdecl;
+  external PCRE2Lib;
+procedure pcre2_jit_stack_free_8 (jit_stack : ppcre2_jit_stack_8); cdecl;
+  external PCRE2Lib;
+{$ENDIF}
+{$IFDEF PCRE16}
+function pcre2_jit_compile_16 (code : ppcre2_code_16; options : Cardinal) :
+  Integer; cdecl; external PCRE2Lib;
 function pcre2_jit_match_16 (const code : ppcre2_code_16; subject :
   PCRE2_SPTR16; length : PCRE2_SIZE; startoffset : PCRE2_SIZE; options :
   Cardinal; match_data : ppcre2_match_data_16; mcontext :
   ppcre2_match_context_16) : Integer; cdecl; external PCRE2Lib;
+procedure pcre2_jit_free_unused_memory_16 (gcontext :
+  ppcre2_general_context_16); cdecl; external PCRE2Lib;
+function pcre2_jit_stack_create_16 (startsize : PCRE2_SIZE; maxsize :
+  PCRE2_SIZE; gcontext : ppcre2_general_context_16) : ppcre2_jit_stack_16;
+  cdecl; external PCRE2Lib;
+procedure pcre2_jit_stack_assign_16 (mcontext : ppcre2_match_context_16;
+  callback_function : pcre2_jit_callback_16; callback_data : Pointer); cdecl;
+  external PCRE2Lib;
+procedure pcre2_jit_stack_free_16 (jit_stack : ppcre2_jit_stack_16); cdecl;
+  external PCRE2Lib;
+{$ENDIF}
+{$IFDEF PCRE32}
+function pcre2_jit_compile_32 (code : ppcre2_code_32; options : Cardinal) :
+  Integer; cdecl; external PCRE2Lib;
 function pcre2_jit_match_32 (const code : ppcre2_code_32; subject :
   PCRE2_SPTR32; length : PCRE2_SIZE; startoffset : PCRE2_SIZE; options :
   Cardinal; match_data : ppcre2_match_data_32; mcontext :
   ppcre2_match_context_32) : Integer; cdecl; external PCRE2Lib;
-procedure pcre2_jit_free_unused_memory_8 (gcontext : ppcre2_general_context_8);
-  cdecl; external PCRE2Lib;
-procedure pcre2_jit_free_unused_memory_16 (gcontext :
-  ppcre2_general_context_16); cdecl; external PCRE2Lib;
 procedure pcre2_jit_free_unused_memory_32 (gcontext :
   ppcre2_general_context_32); cdecl; external PCRE2Lib;
-function pcre2_jit_stack_create_8 (startsize : PCRE2_SIZE; maxsize : PCRE2_SIZE;
-  gcontext : ppcre2_general_context_8) : ppcre2_jit_stack_8; cdecl;
-  external PCRE2Lib;
-function pcre2_jit_stack_create_16 (startsize : PCRE2_SIZE; maxsize :
-  PCRE2_SIZE; gcontext : ppcre2_general_context_16) : ppcre2_jit_stack_16;
-  cdecl; external PCRE2Lib;
 function pcre2_jit_stack_create_32 (startsize : PCRE2_SIZE; maxsize :
   PCRE2_SIZE; gcontext : ppcre2_general_context_32) : ppcre2_jit_stack_32;
   cdecl; external PCRE2Lib;
-procedure pcre2_jit_stack_assign_8 (mcontext : ppcre2_match_context_8;
-  callback_function : pcre2_jit_callback_8; callback_data : Pointer); cdecl;
-  external PCRE2Lib;
-procedure pcre2_jit_stack_assign_16 (mcontext : ppcre2_match_context_16;
-  callback_function : pcre2_jit_callback_16; callback_data : Pointer); cdecl;
-  external PCRE2Lib;
 procedure pcre2_jit_stack_assign_32 (mcontext : ppcre2_match_context_32;
   callback_function : pcre2_jit_callback_32; callback_data : Pointer); cdecl;
   external PCRE2Lib;
-procedure pcre2_jit_stack_free_8 (jit_stack : ppcre2_jit_stack_8); cdecl;
-  external PCRE2Lib;
-procedure pcre2_jit_stack_free_16 (jit_stack : ppcre2_jit_stack_16); cdecl;
-  external PCRE2Lib;
 procedure pcre2_jit_stack_free_32 (jit_stack : ppcre2_jit_stack_32); cdecl;
   external PCRE2Lib;
+{$ENDIF}
 
 { Other miscellaneous functions. }
+{$IFDEF PCRE8}
 function pcre2_get_error_message_8 (errorcode : Integer; buffer : PPCRE2_UCHAR8;
   bufflen : PCRE2_SIZE) : Integer; cdecl; external PCRE2Lib;
-function pcre2_get_error_message_16 (errorcode : Integer; buffer :
-  PPCRE2_UCHAR16; bufflen : PCRE2_SIZE) : Integer; cdecl; external PCRE2Lib;
-function pcre2_get_error_message_32 (errorcode : Integer; buffer :
-  PPCRE2_UCHAR32; bufflen : PCRE2_SIZE) : Integer; cdecl; external PCRE2Lib;
 function pcre2_maketables_8 (gcontext : ppcre2_general_context_8) : PByte;
-  cdecl; external PCRE2Lib;
-function pcre2_maketables_16 (gcontext : ppcre2_general_context_16) : PByte;
-  cdecl; external PCRE2Lib;
-function pcre2_maketables_32 (gcontext : ppcre2_general_context_32) : PByte;
   cdecl; external PCRE2Lib;
 procedure pcre2_maketables_free_8 (gcontext : ppcre2_general_context_8;
   const tables : PByte); cdecl; external PCRE2Lib;
+{$ENDIF}
+{$IFDEF PCRE16}
+function pcre2_get_error_message_16 (errorcode : Integer; buffer :
+  PPCRE2_UCHAR16; bufflen : PCRE2_SIZE) : Integer; cdecl; external PCRE2Lib;
+function pcre2_maketables_16 (gcontext : ppcre2_general_context_16) : PByte;
+  cdecl; external PCRE2Lib;
 procedure pcre2_maketables_free_16 (gcontext : ppcre2_general_context_16;
   const tables : PByte); cdecl; external PCRE2Lib;
+{$ENDIF}
+{$IFDEF PCRE32}
+function pcre2_get_error_message_32 (errorcode : Integer; buffer :
+  PPCRE2_UCHAR32; bufflen : PCRE2_SIZE) : Integer; cdecl; external PCRE2Lib;
+function pcre2_maketables_32 (gcontext : ppcre2_general_context_32) : PByte;
+  cdecl; external PCRE2Lib;
 procedure pcre2_maketables_free_32 (gcontext : ppcre2_general_context_32;
   const tables : PByte); cdecl; external PCRE2Lib;
+{$ENDIF}
 
 implementation
 
