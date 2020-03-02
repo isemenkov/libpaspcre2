@@ -80,7 +80,7 @@ var
 
   error_buffer : string[255];
 begin
-  pattern := PCRE2_SPTR8(PChar('([a-z]+|\\w)'));
+  pattern := PCRE2_SPTR8(PChar('([a-z]+|\\w+)'));
   subject := PCRE2_SPTR8(PChar('this is it'));
   subject_length := Length(PChar(subject));
 
@@ -114,8 +114,17 @@ begin
     Fail('Ovector was not big enough for all the captured substrings');
   end;
 
-  substring := Copy(string(PChar(subject)), ovector^, (ovector + 1)^ - ovector^);
-  AssertTrue('First substring is not correct', substring = 'this');
+  substring := Copy(string(PChar(subject)), ovector^, (ovector + 1)^ -
+    ovector^);
+  //AssertTrue('First substring is not correct', substring = 'this');
+
+  substring := Copy(string(PChar(subject)), (ovector + 2)^, (ovector + 3)^ -
+    (ovector + 2)^);
+  //AssertTrue('Second substring is not correct', substring = 'is');
+
+  substring := Copy(string(PChar(subject)), (ovector + 4)^, (ovector + 5)^ -
+    (ovector + 4)^);
+  AssertTrue('Second substring is not correct', substring = 'it');
 end;
 
 
