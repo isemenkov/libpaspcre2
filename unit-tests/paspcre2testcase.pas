@@ -80,8 +80,8 @@ var
 
   error_buffer : string[255];
 begin
-  pattern := PCRE2_SPTR8(PChar('([a-z]+|\\w+)'));
-  subject := PCRE2_SPTR8(PChar('this is it'));
+  pattern := PCRE2_SPTR8(PChar('(z{2,4})'));
+  subject := PCRE2_SPTR8(PChar('zz not z and zzz but zzzz'));
   subject_length := Length(PChar(subject));
 
   re := pcre2_compile_8(pattern, PCRE2_ZERO_TERMINATED, 0, @error_number,
@@ -95,6 +95,8 @@ begin
   end;
 
   match_data := pcre2_match_data_create_from_pattern_8(re, nil);
+
+  {--- first match ---}
   rc := pcre2_match_8(re, PCRE2_SPTR8(PChar(subject)), subject_length,
     0, 0, match_data, nil);
   if rc < 0 then
@@ -114,17 +116,63 @@ begin
     Fail('Ovector was not big enough for all the captured substrings');
   end;
 
+  substring := '';
+  {                                         ovector ^  ?????                   }
   substring := Copy(string(PChar(subject)), ovector^, (ovector + 1)^ -
     ovector^);
-  //AssertTrue('First substring is not correct', substring = 'this');
+  AssertTrue('First substring is not correct', substring = 'zz');
 
-  substring := Copy(string(PChar(subject)), (ovector + 2)^, (ovector + 3)^ -
-    (ovector + 2)^);
-  //AssertTrue('Second substring is not correct', substring = 'is');
+  {--- second match ---}
+  rc := pcre2_match_8(re, PCRE2_SPTR8(PChar(subject)), subject_length,
+    (ovector + 1)^, 0, match_data, nil);
+  if rc < 0 then
+  begin
+    case rc of
+      PCRE2_ERROR_NOMATCH : Fail('No match');
+    else
+      Fail(Format('Matching error %d', [rc]));
+    end;
+    pcre2_match_data_free_8(match_data);
+    pcre2_code_free_8(re);
+  end;
 
-  substring := Copy(string(PChar(subject)), (ovector + 4)^, (ovector + 5)^ -
-    (ovector + 4)^);
-  AssertTrue('Second substring is not correct', substring = 'it');
+  ovector := pcre2_get_ovector_pointer_8(match_data);
+  if rc = 0 then
+  begin
+    Fail('Ovector was not big enough for all the captured substrings');
+  end;
+
+  substring := '';
+  {                                        ovector ^ + 1 why ?????             }
+  substring := Copy(string(PChar(subject)), ovector^ + 1, (ovector + 1)^ -
+    ovector^);
+  AssertTrue('First substring is not correct', substring = 'zzz');
+
+  {--- third match ---}
+  rc := pcre2_match_8(re, PCRE2_SPTR8(PChar(subject)), subject_length,
+    (ovector + 1)^, 0, match_data, nil);
+  if rc < 0 then
+  begin
+    case rc of
+      PCRE2_ERROR_NOMATCH : Fail('No match');
+    else
+      Fail(Format('Matching error %d', [rc]));
+    end;
+    pcre2_match_data_free_8(match_data);
+    pcre2_code_free_8(re);
+  end;
+
+  ovector := pcre2_get_ovector_pointer_8(match_data);
+  if rc = 0 then
+  begin
+    Fail('Ovector was not big enough for all the captured substrings');
+  end;
+
+  substring := '';
+  {                                        ovector ^ + 1 why ?????             }
+  substring := Copy(string(PChar(subject)), ovector^ + 1, (ovector + 1)^ -
+    ovector^);
+  AssertTrue('First substring is not correct', substring = 'zzzz');
 end;
 
 
