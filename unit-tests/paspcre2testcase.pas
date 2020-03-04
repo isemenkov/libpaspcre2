@@ -16,6 +16,7 @@ type
   published
     procedure Test;
     procedure TestPregMathPattern;
+    procedure TestNumberIndexPattern;
   end;
 
 implementation
@@ -59,18 +60,10 @@ var
   re : ppcre2_code_8;
   pattern : PCRE2_SPTR8;
   subject : PCRE2_SPTR8;
-  name_table : PCRE2_SPTR8;
   substring : string;
 
-  crlf_is_newline : Integer;
   error_number : Integer;
-  name_count : Integer;
-  name_entry_size : Integer;
   rc : Integer;
-  utf8 : Integer;
-
-  option_bits : Cardinal;
-  new_line : Cardinal;
 
   error_offset : PCRE2_SIZE;
   ovector : PPCRE2_SIZE;
@@ -173,6 +166,65 @@ begin
   substring := Copy(string(PChar(subject)), ovector^ + 1, (ovector + 1)^ -
     ovector^);
   AssertTrue('First substring is not correct', substring = 'zzzz');
+end;
+
+procedure TPcre2TestCase.TestNumberIndexPattern;
+var
+  re : ppcre2_code_8;
+  rc : Integer;
+  pattern, subject : PCRE2_SPTR8;
+  error_buffer : string[255];
+  subject_length : QWord;
+  error_number : Integer;
+  error_offset : PCRE2_SIZE;
+  ovector : PPCRE2_SIZE;
+  match_data : ppcre2_match_data_8;
+  substring : string;
+begin
+  { NOTE: in pattern string do not need escaped special symbols like slashes \ }
+  pattern := PCRE2_SPTR8(PChar('(?:\D|^)(5[1-5][0-9]{2}(?:\ |\-|)[0-9]{4}'+
+    '(?:\ |\-|)[0-9]{4}(?:\ |\-|)[0-9]{4})(?:\D|$)'));
+  subject := PCRE2_SPTR8(PChar('5111 2222 3333 4444'));
+  subject_length := Length(PChar(subject));
+
+  re := pcre2_compile_8(pattern, PCRE2_ZERO_TERMINATED, 0, @error_number,
+    @error_offset, nil);
+  if re = nil then
+  begin
+    pcre2_get_error_message_8(error_number, PPCRE2_UCHAR8(@error_buffer[0]),
+      256);
+    Fail(Format('PCRE2 compilation failed at offset %d: %s', [error_offset,
+      error_buffer]));
+  end;
+
+  match_data := pcre2_match_data_create_from_pattern_8(re, nil);
+  rc := pcre2_match_8(re, subject, subject_length, 0, 0, match_data, nil);
+  if rc < 0 then
+  begin
+    case rc of
+      PCRE2_ERROR_NOMATCH :
+      begin
+        pcre2_match_data_free_8(match_data);
+        pcre2_code_free_8(re);
+        Fail('No match');
+      end;
+    else
+      Fail(Format('Matching error %d', [rc]));
+    end;
+  end;
+
+  ovector := pcre2_get_ovector_pointer_8(match_data);
+
+  if ovector^ > (ovector + 1)^ then
+  begin
+    Fail('Error');
+  end;
+
+  substring := Copy(PChar(subject), ovector^, (ovector + 1)^ - ovector^);
+  AssertTrue('Regex found error', substring = '5111 2222 3333 4444');
+
+  pcre2_match_data_free_8(match_data);
+  pcre2_code_free_8(re);
 end;
 
 
