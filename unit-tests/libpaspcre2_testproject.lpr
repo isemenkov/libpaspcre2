@@ -3,7 +3,7 @@ program libpaspcre2_testproject;
 {$mode objfpc}{$H+}
 
 uses
-  Interfaces, Forms, GuiTestRunner, paspcre2testcase;
+  Interfaces, Forms, GuiTestRunner, paspcre2testcase, paspcre2;
 
 {$R *.res}
 
