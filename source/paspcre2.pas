@@ -53,11 +53,29 @@ type
 
 
   TRegex16 = class
+  private
+    re : pcre2_code_16;
+    rc : Integer;
+    pattern, subject : PCRE2_SPTR16;
+    error_buffer : string[255];
+    subject_length : QWord;
 
+  public
+    constructor Create;
+    destructor Destroy; override;
   end;
 
   TRegex32 = class
+  private
+    re : pcre2_code_32;
+    rc : Integer;
+    pattern, subject : PCRE2_SPTR32;
+    error_buffer : string[255];
+    subject_length : QWord;
 
+  public
+    constructor Create;
+    destructor Destroy; override;
   end;
 
 implementation
