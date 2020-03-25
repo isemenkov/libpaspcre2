@@ -35,9 +35,33 @@ unit paspcre2;
 interface
 
 uses
-  Classes, SysUtils, libpaspcre2;
+  Classes, SysUtils, libpaspcre2, fgl;
 
 type
+  TErrors = (
+    ERROR_NONE                                                        = 0,
+  );
+
+  PErrorStack = ^TErrorStack;
+
+  { TErrorStack }
+
+  TErrorStack = class
+  private
+    type
+      TErrorsList = specialize TFPGList<TErrors>;
+  private
+    FErrors : TErrorsList;
+  public
+    constructor Create;
+    destructor Destroy; override;
+
+    procedure Push (Err : TErrors);{$IFNDEF DEBUG}inline;{$ENDIF}
+    function Pop : TErrors;{$IFNDEF DEBUG}inline;{$ENDIF}
+    function Count : Cardinal;{$IFNDEF DEBUG}inline;{$ENDIF}
+    procedure Clear;{$IFNDEF DEBUG}inline;{$ENDIF}
+  end;
+
   TRegex8 = class
   private
     re : pcre2_code_8;
@@ -45,12 +69,11 @@ type
     pattern, subject : PCRE2_SPTR8;
     error_buffer : string[255];
     subject_length : QWord;
-
+    FErrors : TErrorStack;
   public
     constructor Create;
     destructor Destroy; override;
   end;
-
 
   TRegex16 = class
   private
@@ -59,7 +82,7 @@ type
     pattern, subject : PCRE2_SPTR16;
     error_buffer : string[255];
     subject_length : QWord;
-
+    FErrors : TErrorStack;
   public
     constructor Create;
     destructor Destroy; override;
@@ -72,13 +95,50 @@ type
     pattern, subject : PCRE2_SPTR32;
     error_buffer : string[255];
     subject_length : QWord;
-
+    FErrors : TErrorStack;
   public
     constructor Create;
     destructor Destroy; override;
   end;
 
 implementation
+
+{ TErrorStack }
+
+constructor TErrorStack.Create;
+begin
+  FErrors := TErrorsList.Create;
+end;
+
+destructor TErrorStack.Destroy;
+begin
+  FreeAndNil(FErrors);
+  inherited Destroy;
+end;
+
+procedure TErrorStack.Push(Err: TErrors);
+begin
+  FErrors.Add(Err);
+end;
+
+function TErrorStack.Pop: TErrors;
+begin
+  if Count > 0 then
+  begin
+    Result := FErrors.First;
+    FErrors.Delete(0);
+  end;
+end;
+
+function TErrorStack.Count: Cardinal;
+begin
+  Result := FErrors.Count;
+end;
+
+procedure TErrorStack.Clear;
+begin
+  FErrors.Clear;
+end;
 
 end.
 
