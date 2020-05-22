@@ -25,59 +25,72 @@
 (*                                                                            *)
 (******************************************************************************)
 
-unit paspcre2;
+unit errorstack;
 
 {$mode objfpc}{$H+}
-{$IFOPT D+}
-  {$DEFINE DEBUG}
-{$ENDIF}
 
 interface
 
 uses
-  Classes, SysUtils, libpaspcre2, fgl, errorstack;
+  Classes, SysUtils, fgl, libpascurl;
 
 type
-  TRegex8 = class
-  private
-    re : pcre2_code_8;
-    rc : Integer;
-    pattern, subject : PCRE2_SPTR8;
-    error_buffer : string[255];
-    subject_length : QWord;
-    FErrors : TErrorStack;
-  public
-    constructor Create;
-    destructor Destroy; override;
-  end;
+  TErrors = (
+    ERROR_NONE                                                        = 0,
+  );
 
-  TRegex16 = class
-  private
-    re : pcre2_code_16;
-    rc : Integer;
-    pattern, subject : PCRE2_SPTR16;
-    error_buffer : string[255];
-    subject_length : QWord;
-    FErrors : TErrorStack;
-  public
-    constructor Create;
-    destructor Destroy; override;
-  end;
+  { TErrorStack }
+  { Store curl_easy_setopt function errors }
 
-  TRegex32 = class
+  PErrorStack = ^TErrorStack;
+  TErrorStack = class
   private
-    re : pcre2_code_32;
-    rc : Integer;
-    pattern, subject : PCRE2_SPTR32;
-    error_buffer : string[255];
-    subject_length : QWord;
-    FErrors : TErrorStack;
+    type
+      TErrorsList = specialize TFPGList<TErrors>;
+  private
+    FList : TErrorsList;
   public
     constructor Create;
     destructor Destroy; override;
+
+    procedure Push (ACode : CURLcode);
+    function Pop : CURLcode;
+    function Count : Cardinal;
   end;
 
 implementation
+
+{ TErrorStack }
+
+constructor TErrorStack.Create;
+begin
+  FList := TErrorsList.Create;
+end;
+
+destructor TErrorStack.Destroy;
+begin
+  FreeAndNil(FList);
+  inherited Destroy;
+end;
+
+procedure TErrorStack.Push(ACode: TErrors);
+begin
+  FList.Add(ACode);
+end;
+
+function TErrorStack.Pop: TErrors;
+begin
+  if FList.Count > 0 then
+  begin
+    Result := FList.First;
+    FList.Delete(1);
+  end;
+end;
+
+function TErrorStack.Count: Cardinal;
+begin
+  Result := FList.Count;
+end;
 
 end.
 
