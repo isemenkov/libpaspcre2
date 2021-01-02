@@ -1,10 +1,10 @@
 (******************************************************************************)
 (*                                libPasPCRE2                                 *)
-(*  object pascal wrapper around Perl-compatible Regular Expressions library  *)
-(*                                   (PCRE2)                                  *)
-(*                            https://www.pcre.org/                           *)
+(*                  delphi and object  pascal wrapper around                  *)
+(*                Perl-compatible  Regular Expressions library                *)
+(*                       (PCRE2)  https://www.pcre.org/                       *)
 (*                                                                            *)
-(* Copyright (c) 2020                                       Ivan Semenkov     *)
+(* Copyright (c) 2020 - 2021                                Ivan Semenkov     *)
 (* https://github.com/isemenkov/libpaspcre2                 ivan@semenkov.pro *)
 (*                                                          Ukraine           *)
 (******************************************************************************)
@@ -27,7 +27,9 @@
 
 unit libpaspcre2;
 
-{$mode objfpc}{$H+}
+{$IFDEF FPC}
+  {$mode objfpc}{$H+}
+{$ENDIF}
 
 interface
 
@@ -38,15 +40,28 @@ uses
   {$PACKRECORDS C}
 {$ENDIF}
 
-{$IFDEF WINDOWS}
-  const PCRE2Lib_8  = 'libpcre2-8.dll';
-  const PCRE2Lib_16 = 'libpcre2-16.dll';
-  const PCRE2Lib_32 = 'libpcre2-32.dll';
-{$ENDIF}
-{$IFDEF LINUX}
-  const PCRE2Lib_8  = 'libpcre2-8.so';
-  const PCRE2Lib_16 = 'libpcre2-16.so';
-  const PCRE2Lib_32 = 'libpcre2-32.so';
+{$IFDEF FPC}
+  {$IFDEF WINDOWS}
+    const PCRE2Lib_8  = 'pcre2-8.dll';
+    const PCRE2Lib_16 = 'pcre2-16.dll';
+    const PCRE2Lib_32 = 'pcre2-32.dll';
+  {$ENDIF}
+  {$IFDEF LINUX}
+    const PCRE2Lib_8  = 'libpcre2-8.so';
+    const PCRE2Lib_16 = 'libpcre2-16.so';
+    const PCRE2Lib_32 = 'libpcre2-32.so';
+  {$ENDIF}
+{$ELSE}
+  {$IFDEF MSWINDOWS OR defined(MSWINDOWS)}
+    const PCRE2Lib_8  = 'pcre2-8.dll';
+    const PCRE2Lib_16 = 'pcre2-16.dll';
+    const PCRE2Lib_32 = 'pcre2-32.dll';
+  {$ENDIF}
+  {$IFDEF LINUX}
+    const PCRE2Lib_8  = 'libpcre2-8.so';
+    const PCRE2Lib_16 = 'libpcre2-16.so';
+    const PCRE2Lib_32 = 'libpcre2-32.so';
+  {$ENDIF}
 {$ENDIF}
 
 const
@@ -92,17 +107,21 @@ const
   PCRE2_USE_OFFSET_LIMIT =                                {   J M D } $00800000;
   PCRE2_EXTENDED_MORE =                                   { C       } $01000000;
   PCRE2_LITERAL =                                         { C       } $02000000;
+  PCRE2_MATCH_INVALID_UTF =                               {   J M D } $04000000;
 
   { An additional compile options word is available in the compile context. }
   PCRE2_EXTRA_ALLOW_SURROGATE_ESCAPES =                               $00000001;
   PCRE2_EXTRA_BAD_ESCAPE_IS_LITERAL =                                 $00000002;
   PCRE2_EXTRA_MATCH_WORD =                                            $00000004;
   PCRE2_EXTRA_MATCH_LINE =                                            $00000008;
+  PCRE2_EXTRA_ESCAPED_CR_IS_LF =                                      $00000010;
+  PCRE2_EXTRA_ALT_BSUX =                                              $00000020;
 
   { These are for pcre2_jit_compile(). }
   PCRE2_JIT_COMPLETE =                                                $00000001;
   PCRE2_JIT_PARTIAL_SOFT =                                            $00000002;
   PCRE2_JIT_PARTIAL_HARD =                                            $00000004;
+  PCRE2_JIT_INVALID_UTF =                                             $00000100;
 
   { These are for pcre2_match(), pcre2_dfa_match(), and pcre2_jit_match(). Note
     that PCRE2_ANCHORED and PCRE2_NO_UTF_CHECK can also be passed to these
@@ -110,26 +129,22 @@ const
     sanity checks). }
   PCRE2_NOTBOL =                                                      $00000001;
   PCRE2_NOTEOL =                                                      $00000002;
-  PCRE2_NOTEMPTY =           { ) These two must be kept  }            $00000004;
-  PCRE2_NOTEMPTY_ATSTART =   { ) adjacent to each other. }            $00000008;
+  PCRE2_NOTEMPTY =                    { ) These two must be kept  }   $00000004;
+  PCRE2_NOTEMPTY_ATSTART =            { ) adjacent to each other. }   $00000008;
   PCRE2_PARTIAL_SOFT =                                                $00000010;
   PCRE2_PARTIAL_HARD =                                                $00000020;
-
-  { These are additional options for pcre2_dfa_match(). }
-  PCRE2_DFA_RESTART =                                                 $00000040;
-  PCRE2_DFA_SHORTEST =                                                $00000080;
-
-  { These are additional options for pcre2_substitute(), which passes any others
-    through to pcre2_match(). }
-  PCRE2_SUBSTITUTE_GLOBAL =                                           $00000100;
-  PCRE2_SUBSTITUTE_EXTENDED =                                         $00000200;
-  PCRE2_SUBSTITUTE_UNSET_EMPTY =                                      $00000400;
-  PCRE2_SUBSTITUTE_UNKNOWN_UNSET =                                    $00000800;
-  PCRE2_SUBSTITUTE_OVERFLOW_LENGTH =                                  $00001000;
-
-  { A further option for pcre2_match(), not allowed for pcre2_dfa_match(),
-    ignored for pcre2_jit_match(). }
-  PCRE2_NO_JIT =                                                      $00002000;
+  PCRE2_DFA_RESTART =                 { pcre2_dfa_match() only }      $00000040;
+  PCRE2_DFA_SHORTEST =                { pcre2_dfa_match() only }      $00000080;
+  PCRE2_SUBSTITUTE_GLOBAL =           { pcre2_substitute() only }     $00000100;
+  PCRE2_SUBSTITUTE_EXTENDED =         { pcre2_substitute() only }     $00000200;
+  PCRE2_SUBSTITUTE_UNSET_EMPTY =      { pcre2_substitute() only }     $00000400;
+  PCRE2_SUBSTITUTE_UNKNOWN_UNSET =    { pcre2_substitute() only }     $00000800;
+  PCRE2_SUBSTITUTE_OVERFLOW_LENGTH =  { pcre2_substitute() only }     $00001000;
+  PCRE2_NO_JIT =                      { Not for pcre2_dfa_match() }   $00002000;
+  PCRE2_COPY_MATCHED_SUBJECT =                                        $00004000;
+  PCRE2_SUBSTITUTE_LITERAL =          { pcre2_substitute() only }     $00008000;
+  PCRE2_SUBSTITUTE_MATCHED =          { pcre2_substitute() only }     $00010000;
+  PCRE2_SUBSTITUTE_REPLACEMENT_ONLY = { pcre2_substitute() only }     $00020000;
 
   { Options for pcre2_pattern_convert(). }
   PCRE2_CONVERT_UTF =                                                 $00000001;
@@ -247,6 +262,12 @@ const
   PCRE2_ERROR_INTERNAL_BAD_CODE_IN_SKIP =                             190;
   PCRE2_ERROR_NO_SURROGATES_IN_UTF16 =                                191;
   PCRE2_ERROR_BAD_LITERAL_OPTIONS =                                   192;
+  PCRE2_ERROR_SUPPORTED_ONLY_IN_UNICODE =                             193;
+  PCRE2_ERROR_INVALID_HYPHEN_IN_OPTIONS =                             194;
+  PCRE2_ERROR_ALPHA_ASSERTION_UNKNOWN =                               195;
+  PCRE2_ERROR_SCRIPT_RUN_NOT_AVAILABLE =                              196;
+  PCRE2_ERROR_TOO_MANY_CAPTURES =                                     197;
+  PCRE2_ERROR_CONDITION_ATOMIC_ASSERTION_EXPECTED =                   198;
 
   { "Expected" matching error codes: no match and partial match. }
   PCRE2_ERROR_NOMATCH =                                               -1;
@@ -325,6 +346,8 @@ const
   PCRE2_ERROR_BADSERIALIZEDDATA =                                     -62;
   PCRE2_ERROR_HEAPLIMIT =                                             -63;
   PCRE2_ERROR_CONVERT_SYNTAX =                                        -64;
+  PCRE2_ERROR_INTERNAL_DUPMATCH =                                     -65;
+  PCRE2_ERROR_DFA_UINVALID_UTF =                                      -66;
 
   { Request types for pcre2_pattern_info() }
   PCRE2_INFO_ALLOPTIONS =                                             0;
@@ -373,16 +396,19 @@ const
   PCRE2_CONFIG_HEAPLIMIT =                                            12;
   PCRE2_CONFIG_NEVER_BACKSLASH_C =                                    13;
   PCRE2_CONFIG_COMPILED_WIDTHS =                                      14;
+  PCRE2_CONFIG_TABLES_LENGTH =                                        15;
 
-  PCRE2_SIZE_MAX = High(QWord);
-  PCRE2_ZERO_TERMINATED = not QWord(0);
-  PCRE2_UNSET = not QWord(0);
+  PCRE2_SIZE_MAX = High(Int64);
+  PCRE2_ZERO_TERMINATED = High(Int64);
+  PCRE2_UNSET = High(Int64);
 
   { Flags for the callout_flags field. These are cleared after a callout. }
   PCRE2_CALLOUT_STARTMATCH = { Set for each bumpalong }               $00000001;
   PCRE2_CALLOUT_BACKTRACK =  { Set after a backtrack }                $00000002;
 
 type
+  PPByte = ^PByte;
+
   { Types for code units in patterns and subject strings. }
   PPPPCRE2_UCHAR8 = ^PPPCRE2_UCHAR8;
   PPPCRE2_UCHAR8 = ^PPCRE2_UCHAR8;
@@ -400,13 +426,13 @@ type
   PCRE2_UCHAR32 = type Cardinal;
 
   PPCRE2_SPTR8 = ^PCRE2_SPTR8;
-  PCRE2_SPTR8 = type ^PCRE2_UCHAR8;
+  PCRE2_SPTR8 = ^PCRE2_UCHAR8;
 
   PPCRE2_SPTR16 = ^PCRE2_SPTR16;
-  PCRE2_SPTR16 = type ^PCRE2_UCHAR16;
+  PCRE2_SPTR16 = ^PCRE2_UCHAR16;
 
   PPCRE2_SPTR32 = ^PCRE2_SPTR32;
-  PCRE2_SPTR32 = type ^PCRE2_UCHAR32;
+  PCRE2_SPTR32 = ^PCRE2_UCHAR32;
 
   { The PCRE2_SIZE type is used for all string lengths and offsets in PCRE2,
     including pattern offsets for errors and subject offsets after a match. We
@@ -414,7 +440,7 @@ type
     in the offset vector (ovector). }
   PPPCRE2_SIZE = ^PPCRE2_SIZE;
   PPCRE2_SIZE = ^PCRE2_SIZE;
-  PCRE2_SIZE = type QWord;
+  PCRE2_SIZE = Cardinal;
 
   { Generic types for opaque structures and JIT callback functions. }
   ppcre2_real_general_context_8 = ^pcre2_real_general_context_8;

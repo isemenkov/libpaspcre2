@@ -1,10 +1,10 @@
 (******************************************************************************)
 (*                                libPasPCRE2                                 *)
-(*  object pascal wrapper around Perl-compatible Regular Expressions library  *)
-(*                                   (PCRE2)                                  *)
-(*                            https://www.pcre.org/                           *)
+(*                  delphi and object  pascal wrapper around                  *)
+(*                Perl-compatible  Regular Expressions library                *)
+(*                       (PCRE2)  https://www.pcre.org/                       *)
 (*                                                                            *)
-(* Copyright (c) 2020                                       Ivan Semenkov     *)
+(* Copyright (c) 2020 - 2021                                Ivan Semenkov     *)
 (* https://github.com/isemenkov/libpaspcre2                 ivan@semenkov.pro *)
 (*                                                          Ukraine           *)
 (******************************************************************************)
@@ -27,7 +27,9 @@
 
 unit paspcre2;
 
-{$mode objfpc}{$H+}
+{$IFDEF FPC}
+  {$mode objfpc}{$H+}
+{$ENDIF}
 {$IFOPT D+}
   {$DEFINE DEBUG}
 {$ENDIF}
@@ -35,7 +37,7 @@ unit paspcre2;
 interface
 
 uses
-  Classes, SysUtils, libpaspcre2, fgl, errorstack;
+  Classes, SysUtils, libpaspcre2;
 
 type
   TRegex8 = class
@@ -44,11 +46,10 @@ type
     rc : Integer;
     pattern, subject : PCRE2_SPTR8;
     error_buffer : string[255];
-    subject_length : QWord;
-    FErrors : TErrorStack;
+    subject_length : Int64;
   public
-    constructor Create;
-    destructor Destroy; override;
+    //constructor Create;
+    //destructor Destroy; override;
   end;
 
   TRegex16 = class
@@ -57,11 +58,10 @@ type
     rc : Integer;
     pattern, subject : PCRE2_SPTR16;
     error_buffer : string[255];
-    subject_length : QWord;
-    FErrors : TErrorStack;
+    subject_length : Int64;
   public
-    constructor Create;
-    destructor Destroy; override;
+    //constructor Create;
+    //destructor Destroy; override;
   end;
 
   TRegex32 = class
@@ -70,11 +70,10 @@ type
     rc : Integer;
     pattern, subject : PCRE2_SPTR32;
     error_buffer : string[255];
-    subject_length : QWord;
-    FErrors : TErrorStack;
+    subject_length : Int64;
   public
-    constructor Create;
-    destructor Destroy; override;
+    //constructor Create;
+    //destructor Destroy; override;
   end;
 
 implementation

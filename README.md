@@ -1,5 +1,5 @@
 # libPasPCRE2
-libPasPCRE2 is object pascal wrapper around Perl-compatible Regular Expressions library (PCRE2). Library is a set of functions that implement regular expression pattern matching using the same syntax and semantics as Perl 5.
+libPasPCRE2 is delphi and object pascal wrapper around Perl-compatible Regular Expressions library (PCRE2). Library is a set of functions that implement regular expression pattern matching using the same syntax and semantics as Perl 5.
 
 
 
@@ -16,16 +16,22 @@ libPasPCRE2 is object pascal wrapper around Perl-compatible Regular Expressions 
 
 ### Requirements
 
+* [Embarcadero (R) Rad Studio](https://www.embarcadero.com)
 * [Free Pascal Compiler](http://freepascal.org)
 * [Lazarus IDE](http://www.lazarus.freepascal.org/) (optional)
 
-Library is tested with latest stable FreePascal Compiler (currently 3.2.0) and Lazarus IDE (currently 2.0.10).
+
+
+Library is tested for 
+
+- Embarcadero (R) Delphi 10.3 on Windows 7 Service Pack 1 (Version 6.1, Build 7601, 64-bit Edition)
+- FreePascal Compiler (3.2.0) and Lazarus IDE (2.0.10) on Ubuntu Linux 5.8.0-33-generic x86_64
 
 
 
 ### Installation
 
-Get the sources and add the *source* directory to the *fpc.cfg* file.
+Get the sources and add the *source* directory to the project search path. For FPC add the *source* directory to the *fpc.cfg* file.
 
 
 
@@ -41,7 +47,7 @@ Add the unit you want to use to the `uses` clause.
 
 A testing framework consists of the following ingredients:
 1. Test runner project located in `unit-tests` directory.
-2. Test cases (FPCUnit based) for library classes.
+2. Test cases (DUnit for Delphi and FPCUnit for FPC based) for all containers classes. 
 
 
 
@@ -53,26 +59,26 @@ A testing framework consists of the following ingredients:
 
 ```pascal
 uses
-  libpaspcre2;
+  libpaspcre2, utils.api.cstring;
   
 var
   re : pcre2_code_8;
   rc : Integer;
   pattern, subject : PCRE2_SPTR8;
-  error_buffer : string[256];
-  subject_length : QWord;
+  error_buffer : string[255];
+  subject_length : Int64;
   error_number : Integer;
   error_offset : PCRE2_SIZE;
   ovector : PPCRE2_SIZE;
   match_data : ppcre2_match_data_8;
   substring : string;
 begin
-  pattern := PCRE2_SPTR8(PChar('(?:\D|^)(5[1-5][0-9]{2}(?:\ |\-|)[0-9]{4}'+
-    '(?:\ |\-|)[0-9]{4}(?:\ |\-|)[0-9]{4})(?:\D|$)'));
-  subject := PCRE2_SPTR8(PChar('5111 2222 3333 4444'));
-  subject_length := Length(PChar(subject));
+  pattern := PCRE2_SPTR8(API.CString.Create('(?:\D|^)(5[1-5][0-9]{2}(?:\ |\-|)[0-9]{4}'+
+    '(?:\ |\-|)[0-9]{4}(?:\ |\-|)[0-9]{4})(?:\D|$)').ToPAnsiChar);
+  subject := PCRE2_SPTR8(API.CString.Create('5111 2222 3333 4444').ToPAnsiChar);
+  subject_length := API.CString.Create('5111 2222 3333 4444').Length;
   
-  re := pcre2_compile_8(pattern, PCRE2_ZERO_TERMAINATED, 0, @error_number, @error_offset, nil);
+  re := pcre2_compile_8(pattern, PCRE2_ZERO_TERMINATED, 0, @error_number, @error_offset, nil);
   if re = nil then
   begin
     pcre2_get_error_message_8(error_number, PPCRE2_UCHAR8(@error_buffer[0]), 256);
@@ -84,13 +90,15 @@ begin
   if rc < 0 then
   begin
     case rc of
-    PCRE2_ERROR_NOMATCH : begin
-      pcre2_match_data_free_8(match_data);
-      pcre2_code_free_8(re);
-      Fail('No match');
+    PCRE2_ERROR_NOMATCH :
+      begin
+        pcre2_match_data_free_8(match_data);
+        pcre2_code_free_8(re);
+        Fail('No match');
+      end;
     end;
   end;
-  
+  {
   ovector := pcre2_get_ovector_pointer_8(match_data);
   
   if ovector^ > (ovector + 1)^ then
@@ -100,6 +108,7 @@ begin
   
   pcre2_match_data_free_8(match_data);
   pcre2_code_free_8(re);
+  }
 end;
 ```
 
