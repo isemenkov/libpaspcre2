@@ -1,5 +1,5 @@
 # libPasPCRE2
-libPasPCRE2 is delphi and object pascal wrapper around Perl-compatible Regular Expressions library (PCRE2). Library is a set of functions that implement regular expression pattern matching using the same syntax and semantics as Perl 5.
+libPasPCRE2 is delphi and object pascal bindings for Perl-compatible Regular Expressions library (PCRE2). Library is a set of functions that implement regular expression pattern matching using the same syntax and semantics as Perl 5.
 
 
 
